@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Client\JobController;
 use App\Http\Controllers\Client\DashboardController as ClientDashboard;
 use App\Http\Controllers\Freelancer\DashboardController as FreelancerDashboard;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,11 @@ Route::middleware(['auth', 'verified', 'role:client'])
     ->name('client.')
     ->group(function () {
         Route::get('/dashboard', [ClientDashboard::class, 'index'])->name('dashboard');
+
+        Route::get('/jobs',        [JobController::class, 'index'])->name('jobs.index');
+        Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
+        Route::post('/jobs',       [JobController::class, 'store'])->name('jobs.store');
+        Route::get('/jobs/{job}',  [JobController::class, 'show'])->name('jobs.show');
     });
 
 // Freelancer routes — only freelancers allowed

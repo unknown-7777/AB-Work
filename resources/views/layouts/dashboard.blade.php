@@ -103,24 +103,70 @@
 <body>
 
 
-<div class="sidebar">
-    <a href="/" class="sidebar-brand">
-        <i class="bi bi-briefcase-fill me-1"></i>Freelance<span>Hub</span>
-    </a>
-    <nav class="nav flex-column mt-3">
-        @yield('sidebar-links')
-    </nav>
-
-
-    <div style="position:absolute; bottom:0; width:100%; border-top:1px solid rgba(255,255,255,0.1);">
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="nav-link w-100 text-start border-0 bg-transparent">
-                <i class="bi bi-box-arrow-left"></i> Logout
-            </button>
-        </form>
+    <div class="sidebar">
+        <a href="/" class="sidebar-brand">
+            <i class="bi bi-briefcase-fill me-1"></i>AB<span>Work</span>
+        </a>
+        <nav class="nav flex-column mt-3">
+    
+            @if(auth()->user()->isClient())
+                <a href="{{ route('client.dashboard') }}"
+                   class="nav-link {{ request()->routeIs('client.dashboard') ? 'active' : '' }}">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                </a>
+                <a href="{{ route('client.jobs.create') }}"
+                   class="nav-link {{ request()->routeIs('client.jobs.create') ? 'active' : '' }}">
+                    <i class="bi bi-plus-circle"></i> Post a Job
+                </a>
+                <a href="{{ route('client.jobs.index') }}"
+                   class="nav-link {{ request()->routeIs('client.jobs.index') ? 'active' : '' }}">
+                    <i class="bi bi-briefcase"></i> My Jobs
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="bi bi-chat-dots"></i> Messages
+                </a>
+    
+            @elseif(auth()->user()->isFreelancer())
+                <a href="{{ route('freelancer.dashboard') }}"
+                   class="nav-link {{ request()->routeIs('freelancer.dashboard') ? 'active' : '' }}">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="bi bi-search"></i> Find Jobs
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="bi bi-file-earmark-text"></i> My Bids
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="bi bi-chat-dots"></i> Messages
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="bi bi-person-circle"></i> My Profile
+                </a>
+    
+            @elseif(auth()->user()->isAdmin())
+                <a href="#" class="nav-link">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="bi bi-people"></i> Users
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="bi bi-briefcase"></i> All Jobs
+                </a>
+            @endif
+    
+        </nav>
+    
+        <div style="position:absolute; bottom:0; width:100%; border-top:1px solid rgba(255,255,255,0.1);">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="nav-link w-100 text-start border-0 bg-transparent">
+                    <i class="bi bi-box-arrow-left"></i> Logout
+                </button>
+            </form>
+        </div>
     </div>
-</div>
 
 
 <div class="main-content">
