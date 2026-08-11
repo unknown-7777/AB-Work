@@ -107,6 +107,77 @@
     </div>
 
 
+    @if($job->isInProgress() && $job->milestones->isNotEmpty())
+    <div class="bg-white rounded-3 shadow-sm p-4 mt-4">
+        <h5 class="fw-bold mb-4"><i class="bi bi-kanban me-2"></i>Milestones</h5>
+        @foreach($job->milestones as $milestone)
+        <div class="border rounded-3 p-3 mb-3">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h6 class="fw-bold">{{ $milestone->order }}. {{ $milestone->title }}</h6>
+                    <span class="text-success fw-semibold">${{ number_format($milestone->amount) }}</span>
+                </div>
+                <span class="badge {{ $milestone->statusBadgeClass() }}">
+                    {{ ucfirst(str_replace('_',' ',$milestone->status)) }}
+                </span>
+            </div>
+    
+            @if($milestone->submission_note)
+                <div class="alert alert-info mt-2 mb-2 small">
+                    <strong>Freelancer note:</strong> {{ $milestone->submission_note }}
+                </div>
+            @endif
+    
+            @if($milestone->isSubmitted())
+            <div class="d-flex gap-2 mt-3">
+                <form action="{{ route('client.milestones.approve', $milestone) }}" method="POST">
+                    @csrf @method('PATCH')
+                    <button class="btn btn-success btn-sm">
+                        <i class="bi bi-check-lg me-1"></i>Approve & Release Payment
+                    </button>
+                </form>
+                <button class="btn btn-outline-warning btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#revisionModal{{ $milestone->id }}">
+                    Request Revision
+                </button>
+            </div>
+    
+
+            <div class="modal fade" id="revisionModal{{ $milestone->id }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Request Revision</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{{ route('client.milestones.revision', $milestone) }}" method="POST">
+                            @csrf @method('PATCH')
+                            <div class="modal-body">
+                                <textarea name="revision_note" class="form-control" rows="4"
+                                          placeholder="Explain what needs to be changed..." required></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-warning">Send Revision Request</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            @endif
+        </div>
+        @endforeach
+    </div>
+    @elseif($job->isInProgress() && $job->milestones->isEmpty())
+    <div class="bg-white rounded-3 shadow-sm p-4 mt-4 text-center text-muted">
+        <i class="bi bi-kanban fs-1 d-block mb-2 opacity-25"></i>
+        <p>No milestones yet.</p>
+        <a href="{{ route('client.milestones.create', $job) }}" class="btn btn-primary btn-sm">
+            <i class="bi bi-plus me-1"></i>Create Milestones
+        </a>
+    </div>
+    @endif
+
+
     <div class="col-lg-4">
         <div class="bg-white rounded-3 shadow-sm p-4">
             <h6 class="fw-bold mb-3">Job Details</h6>

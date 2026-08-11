@@ -145,6 +145,9 @@
                     <a href="#" class="nav-link">
                         <i class="bi bi-person-circle"></i> My Profile
                     </a>
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-kanban"></i> My Projects
+                    </a>
     
             @elseif(auth()->user()->isAdmin())
                 <a href="#" class="nav-link">
