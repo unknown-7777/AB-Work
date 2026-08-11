@@ -2,6 +2,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Client\DashboardController as ClientDashboard;
 use App\Http\Controllers\Client\JobController as ClientJobController;
+use App\Http\Controllers\Client\BidController as ClientBidController;
 use App\Http\Controllers\Freelancer\DashboardController as FreelancerDashboard;
 use App\Http\Controllers\Freelancer\JobController as FreelancerJobController;
 use App\Http\Controllers\Freelancer\BidController;
@@ -16,11 +17,13 @@ Route::middleware(['auth', 'verified', 'role:client'])
     ->prefix('client')
     ->name('client.')
     ->group(function () {
-        Route::get('/dashboard',       [ClientDashboard::class, 'index'])->name('dashboard');
-        Route::get('/jobs',            [ClientJobController::class, 'index'])->name('jobs.index');
-        Route::get('/jobs/create',     [ClientJobController::class, 'create'])->name('jobs.create');
-        Route::post('/jobs',           [ClientJobController::class, 'store'])->name('jobs.store');
-        Route::get('/jobs/{job}',      [ClientJobController::class, 'show'])->name('jobs.show');
+        Route::get('/dashboard',           [ClientDashboard::class, 'index'])->name('dashboard');
+        Route::get('/jobs',                [ClientJobController::class, 'index'])->name('jobs.index');
+        Route::get('/jobs/create',         [ClientJobController::class, 'create'])->name('jobs.create');
+        Route::post('/jobs',               [ClientJobController::class, 'store'])->name('jobs.store');
+        Route::get('/jobs/{job}',          [ClientJobController::class, 'show'])->name('jobs.show');
+        Route::patch('/bids/{bid}/accept', [ClientBidController::class, 'accept'])->name('bids.accept');
+        Route::patch('/bids/{bid}/reject', [ClientBidController::class, 'reject'])->name('bids.reject');
     });
 
 // Freelancer routes
