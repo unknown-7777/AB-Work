@@ -1,0 +1,22 @@
+.bg-image {
+  background-image: url("../img/slide-1.jpg");
+  background-color: black;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;;
+}
+.bg-image-between {
+  background-image: url("../img/cta-bg.jpg");
+  background-color: black;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+.bg-shadow {
+  background-color: rgba(228, 222, 222, 0.274);
+}
+
+
