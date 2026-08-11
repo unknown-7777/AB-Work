@@ -126,23 +126,25 @@
                     <i class="bi bi-chat-dots"></i> Messages
                 </a>
     
-            @elseif(auth()->user()->isFreelancer())
-                <a href="{{ route('freelancer.dashboard') }}"
-                   class="nav-link {{ request()->routeIs('freelancer.dashboard') ? 'active' : '' }}">
-                    <i class="bi bi-speedometer2"></i> Dashboard
-                </a>
-                <a href="#" class="nav-link">
-                    <i class="bi bi-search"></i> Find Jobs
-                </a>
-                <a href="#" class="nav-link">
-                    <i class="bi bi-file-earmark-text"></i> My Bids
-                </a>
-                <a href="#" class="nav-link">
-                    <i class="bi bi-chat-dots"></i> Messages
-                </a>
-                <a href="#" class="nav-link">
-                    <i class="bi bi-person-circle"></i> My Profile
-                </a>
+                @elseif(auth()->user()->isFreelancer())
+                    <a href="{{ route('freelancer.dashboard') }}"
+                       class="nav-link {{ request()->routeIs('freelancer.dashboard') ? 'active' : '' }}">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                    <a href="{{ route('freelancer.jobs.index') }}"
+                       class="nav-link {{ request()->routeIs('freelancer.jobs.*') ? 'active' : '' }}">
+                        <i class="bi bi-search"></i> Find Jobs
+                    </a>
+                    <a href="{{ route('freelancer.bids.index') }}"
+                       class="nav-link {{ request()->routeIs('freelancer.bids.*') ? 'active' : '' }}">
+                        <i class="bi bi-file-earmark-text"></i> My Bids
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-chat-dots"></i> Messages
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-person-circle"></i> My Profile
+                    </a>
     
             @elseif(auth()->user()->isAdmin())
                 <a href="#" class="nav-link">

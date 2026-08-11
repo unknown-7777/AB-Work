@@ -9,7 +9,7 @@ return new class extends Migration
     {
         Schema::create('milestones', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('job_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('job_id')->constrained('freelance_jobs')->cascadeOnDelete();
             $table->foreignId('bid_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->text('description')->nullable();
