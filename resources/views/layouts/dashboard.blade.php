@@ -119,7 +119,7 @@
                     <i class="bi bi-plus-circle"></i> Post a Job
                 </a>
                 <a href="{{ route('client.jobs.index') }}"
-                   class="nav-link {{ request()->routeIs('client.jobs.index') ? 'active' : '' }}">
+                   class="nav-link {{ request()->routeIs('client.jobs.index', 'client.jobs.show') ? 'active' : '' }}">
                     <i class="bi bi-briefcase"></i> My Jobs
                 </a>
                 <a href="#" class="nav-link">
@@ -145,7 +145,8 @@
                     <a href="#" class="nav-link">
                         <i class="bi bi-person-circle"></i> My Profile
                     </a>
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('freelancer.projects.index') }}"
+                       class="nav-link {{ request()->routeIs('freelancer.projects.*') ? 'active' : '' }}">
                         <i class="bi bi-kanban"></i> My Projects
                     </a>
     

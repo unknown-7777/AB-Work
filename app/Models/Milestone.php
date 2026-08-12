@@ -22,6 +22,18 @@ class Milestone extends Model
         ];
     }
 
+    public function statusBadgeClass(): string
+    {
+        return match($this->status) {
+            'pending'     => 'bg-secondary',
+            'in_progress' => 'bg-primary',
+            'submitted'   => 'bg-warning text-dark',
+            'approved'    => 'bg-success',
+            'revision'    => 'bg-danger',
+            default       => 'bg-light text-dark',
+        };
+    }
+
     public function job(): BelongsTo { return $this->belongsTo(Job::class); }
     public function bid(): BelongsTo { return $this->belongsTo(Bid::class); }
 

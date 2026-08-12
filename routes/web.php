@@ -8,6 +8,7 @@ use App\Http\Controllers\Freelancer\MilestoneController as FreelancerMilestoneCo
 use App\Http\Controllers\Freelancer\DashboardController as FreelancerDashboard;
 use App\Http\Controllers\Freelancer\JobController as FreelancerJobController;
 use App\Http\Controllers\Freelancer\BidController;
+use App\Http\Controllers\Freelancer\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -46,6 +47,8 @@ Route::middleware(['auth', 'verified', 'role:freelancer'])
         Route::delete('/bids/{bid}',                    [BidController::class, 'destroy'])->name('bids.destroy');
         Route::patch('/milestones/{milestone}/submit',  [FreelancerMilestoneController::class, 'submit'])->name('milestones.submit');
         Route::get('/projects/{job}',                   [FreelancerMilestoneController::class, 'show'])->name('projects.show');
+        Route::get('/projects',                         [ProjectController::class, 'index'])->name('projects.index');
+        Route::get('/projects/{job}',                   [ProjectController::class, 'show'])->name('projects.show');
     });
 
 Route::middleware('auth')->group(function () {
