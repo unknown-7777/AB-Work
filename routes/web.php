@@ -1,15 +1,21 @@
 <?php
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\JobController as AdminJobController;
+
 use App\Http\Controllers\Client\DashboardController as ClientDashboard;
 use App\Http\Controllers\Client\JobController as ClientJobController;
 use App\Http\Controllers\Client\BidController as ClientBidController;
 use App\Http\Controllers\Client\MilestoneController as ClientMilestoneController;
+
 use App\Http\Controllers\Freelancer\MilestoneController as FreelancerMilestoneController;
 use App\Http\Controllers\Freelancer\DashboardController as FreelancerDashboard;
 use App\Http\Controllers\Freelancer\JobController as FreelancerJobController;
 use App\Http\Controllers\Freelancer\BidController;
 use App\Http\Controllers\Freelancer\ProjectController;
-use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,6 +56,19 @@ Route::middleware(['auth', 'verified', 'role:freelancer'])
         Route::get('/projects',                         [ProjectController::class, 'index'])->name('projects.index');
         Route::get('/projects/{job}',                   [ProjectController::class, 'show'])->name('projects.show');
     });
+
+    // Admin routes
+    Route::middleware(['auth', 'verified', 'role:admin'])
+        ->prefix('admin')
+        ->name('admin.')
+        ->group(function () {
+            Route::get('/dashboard',         [AdminDashboard::class, 'index'])->name('dashboard');
+            Route::get('/users',             [AdminUserController::class, 'index'])->name('users.index');
+            Route::patch('/users/{user}/toggle', [AdminUserController::class, 'toggle'])->name('users.toggle');
+            Route::delete('/users/{user}',   [AdminUserController::class, 'destroy'])->name('users.destroy');
+            Route::get('/jobs',              [AdminJobController::class, 'index'])->name('jobs.index');
+            Route::delete('/jobs/{job}',     [AdminJobController::class, 'destroy'])->name('jobs.destroy');
+        });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile',    [ProfileController::class, 'edit'])->name('profile.edit');

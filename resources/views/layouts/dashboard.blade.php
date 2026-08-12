@@ -151,13 +151,16 @@
                     </a>
     
             @elseif(auth()->user()->isAdmin())
-                <a href="#" class="nav-link">
+                <a href="{{ route('admin.dashboard') }}"
+                   class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                     <i class="bi bi-speedometer2"></i> Dashboard
                 </a>
-                <a href="#" class="nav-link">
+                <a href="{{ route('admin.users.index') }}"
+                   class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                     <i class="bi bi-people"></i> Users
                 </a>
-                <a href="#" class="nav-link">
+                <a href="{{ route('admin.jobs.index') }}"
+                   class="nav-link {{ request()->routeIs('admin.jobs.*') ? 'active' : '' }}">
                     <i class="bi bi-briefcase"></i> All Jobs
                 </a>
             @endif
