@@ -142,7 +142,8 @@
                     <a href="#" class="nav-link">
                         <i class="bi bi-chat-dots"></i> Messages
                     </a>
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('freelancer.profile.edit') }}"
+                       class="nav-link {{ request()->routeIs('freelancer.profile.*') ? 'active' : '' }}">
                         <i class="bi bi-person-circle"></i> My Profile
                     </a>
                     <a href="{{ route('freelancer.projects.index') }}"

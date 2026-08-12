@@ -18,6 +18,7 @@ use App\Http\Controllers\Freelancer\DashboardController as FreelancerDashboard;
 use App\Http\Controllers\Freelancer\JobController as FreelancerJobController;
 use App\Http\Controllers\Freelancer\BidController;
 use App\Http\Controllers\Freelancer\ProjectController;
+use App\Http\Controllers\Freelancer\ProfileController as FreelancerProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -57,6 +58,8 @@ Route::middleware(['auth', 'verified', 'role:freelancer'])
         Route::get('/projects/{job}',                   [FreelancerMilestoneController::class, 'show'])->name('projects.show');
         Route::get('/projects',                         [ProjectController::class, 'index'])->name('projects.index');
         Route::get('/projects/{job}',                   [ProjectController::class, 'show'])->name('projects.show');
+        Route::get('/profile',                          [FreelancerProfileController::class, 'edit'])->name('profile.edit');
+        Route::post('/profile',                         [FreelancerProfileController::class, 'update'])->name('profile.update');
     });
 
     // Admin routes
@@ -78,6 +81,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/jobs/{job}/review',  [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('/jobs/{job}/review', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::get('/freelancers/{userId}', [FreelancerProfileController::class, 'show'])->name('freelancer.profile.show')->middleware('auth');
 });
 
 require __DIR__.'/auth.php';
