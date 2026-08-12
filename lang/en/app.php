@@ -62,4 +62,14 @@ return [
     'total_earned'    => 'Total Earned',
     'active_projects' => 'Active Projects',
     'welcome'         => 'Welcome back',
+
+    // Added for Client Dashboard View
+    'client_dashboard'                => 'Client Dashboard',
+    'my_recent_jobs'                  => 'My Recent Jobs',
+    'post_new_job'                    => 'Post New Job',
+    'you_have_not_posted_any_jobs_yet' => 'You have not posted any jobs yet.',
+    'post_your_first_job'             => 'Post Your First Job',
+    'view_all_jobs'                   => 'View All Jobs',
+    'not_available'                   => 'N/A',
+    'bids_count'                      => 'bid|bids', // Pluralization rule: 1 bid vs 2+ bids
 ];

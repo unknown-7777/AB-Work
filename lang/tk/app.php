@@ -62,4 +62,14 @@ return [
     'total_earned'    => 'Gazanylan',
     'active_projects' => 'Işjeň taslamalar',
     'welcome'         => 'Hoş geldiňiz',
+
+    // Added for Client Dashboard View
+    'client_dashboard'                => 'Müşderi paneli',
+    'my_recent_jobs'                  => 'Meniň soňky ýerleşdiren işlerim',
+    'post_new_job'                    => 'Täze iş ýerleşdir',
+    'you_have_not_posted_any_jobs_yet' => 'Siz entek hiç hili iş ýerleşdirmediňiz.',
+    'post_your_first_job'             => 'Ilkinji işiňizi ýerleşdiriň',
+    'view_all_jobs'                   => 'Ähli işleri gör',
+    'not_available'                   => 'Elýetersiz',
+    'bids_count'                      => 'teklip|teklip', 
 ];

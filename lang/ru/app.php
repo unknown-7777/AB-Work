@@ -62,4 +62,14 @@ return [
     'total_earned'    => 'Заработано',
     'active_projects' => 'Активные проекты',
     'welcome'         => 'Добро пожаловать',
+
+    // Added for Client Dashboard View
+    'client_dashboard'                => 'Панель клиента',
+    'my_recent_jobs'                  => 'Мои недавние заказы',
+    'post_new_job'                    => 'Разместить новый заказ',
+    'you_have_not_posted_any_jobs_yet' => 'Вы еще не разместили ни одного заказа.',
+    'post_your_first_job'             => 'Разместите свой первый заказ',
+    'view_all_jobs'                   => 'Посмотреть все заказы',
+    'not_available'                   => 'Н/Д',
+    'bids_count'                      => 'заявка|заявки|заявок', // Russian pluralization rule
 ];
