@@ -8,7 +8,7 @@
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <div class="stat-number">{{ $stats['active_jobs'] }}</div>
-                    <div class="stat-label">Active Jobs</div>
+                    <div class="stat-label">{{ __('app.active_jobs') }}</div>
                 </div>
                 <div class="stat-icon bg-primary bg-opacity-10 text-primary">
                     <i class="bi bi-briefcase"></i>
