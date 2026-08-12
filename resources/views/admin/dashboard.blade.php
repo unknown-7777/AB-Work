@@ -113,8 +113,7 @@
             @foreach($recentUsers as $user)
             <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
                 <div class="d-flex align-items-center gap-2">
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=2563eb&color=fff&size=32"
-                         class="rounded-circle" width="32" height="32">
+                    <i class="bi bi-person-circle text-primary" style="font-size: 36px; line-height: 1;"></i>
                     <div>
                         <div class="fw-semibold small">{{ $user->name }}</div>
                         <div class="text-muted" style="font-size:0.75rem;">{{ $user->email }}</div>

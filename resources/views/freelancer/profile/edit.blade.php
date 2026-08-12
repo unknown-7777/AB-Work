@@ -6,8 +6,7 @@
     <div class="col-lg-8">
         <div class="bg-white rounded-3 shadow-sm p-4">
             <div class="d-flex align-items-center gap-3 mb-4">
-                <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=2563eb&color=fff&size=64"
-                     class="rounded-circle" width="64" height="64">
+                <i class="bi bi-person-circle text-primary" style="font-size: 36px; line-height: 1;"></i>
                 <div>
                     <h4 class="fw-bold mb-0">{{ auth()->user()->name }}</h4>
                     <small class="text-muted">{{ auth()->user()->email }}</small>

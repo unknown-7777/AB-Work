@@ -57,7 +57,7 @@
                     <i class="bi bi-clock me-1"></i>{{ $job->created_at->diffForHumans() }}
                 </small>
                 <p class="mt-2 mb-2 text-muted small">
-                    {{ Str::limit($job->description, 150) }}
+                    {{ Str::limit($job->description, 100) }}
                 </p>
                 @if($job->required_skills)
                     @foreach($job->required_skills as $skill)

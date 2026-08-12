@@ -6,7 +6,7 @@
 
     <div class="col-lg-4">
         <div class="bg-white rounded-3 shadow-sm p-4 text-center">
-            <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=2563eb&color=fff&size=80"
+            <i class="bi bi-person-circle text-primary" style="font-size: 36px; line-height: 1;"></i>
                  class="rounded-circle mb-3" width="80" height="80">
             <h4 class="fw-bold">{{ $user->name }}</h4>
             <p class="text-muted mb-2">{{ $user->profile->title ?? 'Freelancer' }}</p>

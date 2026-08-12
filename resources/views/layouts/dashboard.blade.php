@@ -186,8 +186,8 @@
     <div class="topbar">
         <h1 class="page-title">@yield('title')</h1>
         <div class="d-flex align-items-center gap-3">
-    
-
+            
+            
             <div class="dropdown">
                 <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
                     @if(app()->getLocale() == 'ru') 🇷🇺 RU
@@ -200,13 +200,19 @@
                     <li><a class="dropdown-item" href="{{ route('lang.switch', 'tk') }}">🇹🇲 Türkmençe</a></li>
                 </ul>
             </div>
-    
+
+            
             <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold">
                 {{ ucfirst(auth()->user()->role) }}
             </span>
-            <span class="text-muted small">{{ auth()->user()->name }}</span>
-            <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=2563eb&color=fff&size=36"
-                 class="rounded-circle" width="36" height="36">
+            
+            
+            <span class="text-muted small fw-medium">{{ auth()->user()->name }}</span>
+            
+            
+            <i class="bi bi-person-circle text-primary" style="font-size: 36px; line-height: 1;"></i>
+            
+            
         </div>
     </div>
 

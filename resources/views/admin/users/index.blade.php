@@ -49,8 +49,7 @@
                 <td>{{ $user->id }}</td>
                 <td>
                     <div class="d-flex align-items-center gap-2">
-                        <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=2563eb&color=fff&size=28"
-                             class="rounded-circle" width="28" height="28">
+                        <i class="bi bi-person-circle text-primary" style="font-size: 36px; line-height: 1;"></i>
                         {{ $user->name }}
                     </div>
                 </td>
@@ -73,7 +72,8 @@
                     @if(!$user->isAdmin())
                     <div class="d-flex gap-2">
                         <form action="{{ route('admin.users.toggle', $user) }}" method="POST">
-                            @csrf @method('PATCH')
+                            @csrf 
+                            @method('PATCH')
                             <button class="btn btn-sm {{ $user->is_active ? 'btn-warning' : 'btn-success' }}">
                                 {{ $user->is_active ? 'Ban' : 'Unban' }}
                             </button>

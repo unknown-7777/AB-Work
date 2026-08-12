@@ -64,12 +64,11 @@
             @endif
         </div>
 
-        {{-- Client Info --}}
+
         <div class="bg-white rounded-3 shadow-sm p-4">
             <h6 class="fw-bold mb-3">About the Client</h6>
             <div class="d-flex align-items-center gap-2">
-                <img src="https://ui-avatars.com/api/?name={{ urlencode($job->client->name) }}&background=2563eb&color=fff&size=36"
-                     class="rounded-circle" width="40" height="40">
+                <i class="bi bi-person-circle text-primary" style="font-size: 36px; line-height: 1;"></i>
                 <div>
                     <div class="fw-semibold">{{ $job->client->name }}</div>
                     <small class="text-muted">Member since {{ $job->client->created_at->format('M Y') }}</small>

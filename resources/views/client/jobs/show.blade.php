@@ -51,8 +51,7 @@
                     @if($bid->isAccepted()) border-success bg-success bg-opacity-10 @endif">
                     <div class="d-flex justify-content-between align-items-start">
                         <div class="d-flex gap-3">
-                            <img src="https://ui-avatars.com/api/?name={{ urlencode($bid->freelancer->name) }}&background=2563eb&color=fff&size=40"
-                                 class="rounded-circle" width="44" height="44">
+                            <i class="bi bi-person-circle text-primary" style="font-size: 36px; line-height: 1;"></i>
                             <div>
                                 <div class="fw-bold">{{ $bid->freelancer->name }}</div>
                                 <small class="text-muted">

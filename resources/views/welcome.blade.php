@@ -134,7 +134,7 @@
 </head>
 <body>
 
-
+@guest
 <nav class="navbar navbar-expand-lg sticky-top px-4 px-md-5">
     <a class="navbar-brand" href="#">
         <i class="bi bi-briefcase-fill me-1"></i>{{ config('app.name') }}
@@ -144,6 +144,18 @@
         <a href="{{ route('register') }}" class="btn btn-primary rounded-3 fw-600">Get Started</a>
     </div>
 </nav>
+@endguest
+
+@auth
+<nav class="navbar navbar-expand-lg sticky-top px-4 px-md-5">
+    <a class="navbar-brand" href="#">
+        <i class="bi bi-briefcase-fill me-1"></i>{{ config('app.name') }}
+    </a>
+    <div class="ms-auto d-flex gap-2">
+        <a href="{{ route('logout') }}" class="btn btn-outline-danger rounded-3">Logout</a>
+    </div>
+</nav>
+@endauth
 
 
 <section class="hero">
@@ -173,6 +185,8 @@
             </div>
             <div class="col-lg-5 d-none d-lg-flex justify-content-center mt-5 mt-lg-0">
                 <div class="p-4 bg-white rounded-4 shadow-lg" style="width:320px;">
+
+
                     <!-- Live Status Indicator with Pulsing Effect -->
                     <div class="d-flex align-items-center mb-3">
                         <div class="bg-success rounded-circle me-2 position-relative" style="width:10px;height:10px;">
@@ -246,7 +260,7 @@
         </div>
         <div class="row g-3">
             @foreach([
-                ['icon'=>'bi-code-slash',    'label'=>'Web Development',  'jobs'=>'1,240'],
+                ['icon'=>'bi-code-slash',    'label'=>'Web Development',   'jobs'=>'1,240'],
                 ['icon'=>'bi-palette',        'label'=>'Design & Creative','jobs'=>'860'],
                 ['icon'=>'bi-pen',            'label'=>'Writing',          'jobs'=>'540'],
                 ['icon'=>'bi-megaphone',      'label'=>'Marketing',        'jobs'=>'430'],
