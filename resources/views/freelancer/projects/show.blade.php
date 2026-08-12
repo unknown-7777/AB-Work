@@ -2,6 +2,8 @@
 @section('title', $job->title)
 
 @section('content')
+@php use App\Models\Review; @endphp
+
 <div class="bg-white rounded-3 shadow-sm p-4 mb-4">
     <h4 class="fw-bold">{{ $job->title }}</h4>
     <small class="text-muted">Client: {{ $job->client->name }}</small>
@@ -59,4 +61,20 @@
     </div>
     @endforeach
 @endif
+
+    @if($job->isCompleted())
+    <div class="bg-white rounded-3 shadow-sm p-4 mt-4">
+        <h5 class="fw-bold mb-3">Review</h5>
+        @if(Review::where('job_id', $job->id)->where('reviewer_id', auth()->id())->exists())
+            <div class="alert alert-success">
+                <i class="bi bi-check-circle me-2"></i>You already submitted a review.
+            </div>
+        @else
+            <a href="{{ route('reviews.create', $job) }}" class="btn btn-warning">
+                <i class="bi bi-star me-2"></i>Leave a Review
+            </a>
+        @endif
+    </div>
+@endif
+
 @endsection
