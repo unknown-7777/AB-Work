@@ -69,8 +69,8 @@
             <h6 class="fw-bold mb-3">About the Client</h6>
             <div class="d-flex align-items-center gap-2">
                 
-                @if($user->avatar)
-                    <img src="{{ $user->avatarUrl() }}"
+                @if($job->client->avatar)
+                         <img src="{{ $job->client->avatarUrl() }}"
                          class="rounded-circle" width="28" height="28"
                          style="object-fit:cover;">
                 @else

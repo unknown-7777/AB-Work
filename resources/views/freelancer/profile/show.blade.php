@@ -77,7 +77,7 @@
         </div>
         @endif
 
-        {{-- Reviews --}}
+
         <div class="bg-white rounded-3 shadow-sm p-4">
             <h5 class="fw-bold mb-3">
                 Reviews

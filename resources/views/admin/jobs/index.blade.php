@@ -68,8 +68,11 @@
                 <td>
                     <form action="{{ route('admin.jobs.destroy', $job) }}" method="POST">
                         @csrf @method('DELETE')
-                        <button class="btn btn-sm btn-danger"
-                                onclick="return confirm('Delete this job?')">
+                        <button type="button" 
+                                class="btn btn-sm btn-danger" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deleteModal" 
+                                data-route="{{ route('admin.jobs.destroy', $job) }}">
                             Delete
                         </button>
                     </form>

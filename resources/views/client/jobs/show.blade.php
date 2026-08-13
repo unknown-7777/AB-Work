@@ -1,6 +1,7 @@
 @extends('layouts.dashboard')
 @section('title', $job->title)
 
+
 @section('content')
 @php use App\Models\Review; @endphp
 
@@ -221,13 +222,14 @@
 
         @if($job->isCompleted())
         <div class="bg-white rounded-3 shadow-sm p-4 mt-4">
-            <h5 class="fw-bold mb-3">Review</h5>
-            @if(Review::where('job_id', $job->id)->where('reviewer_id', auth()->id())->exists())
-                <div class="alert alert-success">
-                    <i class="bi bi-check-circle me-2"></i>You already submitted a review.
+            <h5 class="fw-bold mb-3"><i class="bi bi-star me-2"></i>Review</h5>
+            @if(Review::where('job_id',$job->id)->where('reviewer_id',auth()->id())->exists())
+                <div class="alert alert-success mb-0 small">
+                    <i class="bi bi-check-circle me-1"></i>You already reviewed this project.
                 </div>
             @else
-                <a href="{{ route('reviews.create', $job) }}" class="btn btn-warning">
+                <p class="text-muted small">How was your experience with the freelancer?</p>
+                <a href="{{ route('reviews.create', $job) }}" class="btn btn-warning w-100">
                     <i class="bi bi-star me-2"></i>Leave a Review
                 </a>
             @endif

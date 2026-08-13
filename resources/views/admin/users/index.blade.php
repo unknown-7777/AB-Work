@@ -31,16 +31,18 @@
 </form>
 
 <div class="bg-white rounded-3 shadow-sm">
-    <table class="table table-hover mb-0">
+    <table class="table table-hover align-middle mb-0">
         <thead class="table-light">
             <tr>
                 <th>#</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Role</th>
-                <th>Status</th>
+
+                <th style="width: 100px;">Status</th>
                 <th>Joined</th>
-                <th>Actions</th>
+
+                <th style="width: 140px;">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -71,7 +73,8 @@
                     </span>
                 </td>
                 <td>
-                    <span class="badge {{ $user->is_active ? 'bg-success' : 'bg-danger' }}">
+
+                    <span class="badge {{ $user->is_active ? 'bg-success' : 'bg-danger' }} d-inline-block text-center" style="width: 72px;">
                         {{ $user->is_active ? 'Active' : 'Banned' }}
                     </span>
                 </td>
@@ -79,17 +82,21 @@
                 <td>
                     @if(!$user->isAdmin())
                     <div class="d-flex gap-2">
-                        <form action="{{ route('admin.users.toggle', $user) }}" method="POST">
+                        <form action="{{ route('admin.users.toggle', $user) }}" method="POST" class="m-0">
                             @csrf 
                             @method('PATCH')
-                            <button class="btn btn-sm {{ $user->is_active ? 'btn-warning' : 'btn-success' }}">
+
+                            <button class="btn btn-sm {{ $user->is_active ? 'btn-warning' : 'btn-success' }} text-center" style="width: 58px; padding-left: 0; padding-right: 0;">
                                 {{ $user->is_active ? 'Ban' : 'Unban' }}
                             </button>
                         </form>
-                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
+                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="m-0">
                             @csrf @method('DELETE')
-                            <button class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Delete this user?')">
+                            <button type="button" 
+                                    class="btn btn-sm btn-danger" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#deleteModal" 
+                                    data-route="{{ route('admin.users.destroy', $user) }}">
                                 Delete
                             </button>
                         </form>

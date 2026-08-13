@@ -12,17 +12,18 @@
     </div>
 @else
     <div class="bg-white rounded-3 shadow-sm">
-        @foreach($conversations as $job)
+        @foreach($conversations as $conversation)
         @php
-            $userId    = auth()->id();
-            $otherUser = $job->client_id === $userId ? $job->hiredFreelancer : $job->client;
-            $lastMsg   = $job->messages->first();
-            $unread    = \App\Models\Message::where('job_id', $job->id)
-                            ->where('receiver_id', $userId)
+            $otherUser = $conversation->other_user;
+            $lastMsg   = $conversation->latest_message;
+            $job       = $conversation->job;
+            
+            $unread    = \App\Models\Message::where('sender_id', $otherUser->id)
+                            ->where('receiver_id', auth()->id())
                             ->where('is_read', false)
                             ->count();
         @endphp
-        <a href="{{ route('messages.show', $job) }}"
+        <a href="{{ route('messages.show', $otherUser->id) }}"
            class="d-flex align-items-center gap-3 p-3 border-bottom text-decoration-none text-dark
                   {{ $unread > 0 ? 'bg-primary bg-opacity-10' : '' }}"
            style="transition: background 0.2s;">
@@ -43,7 +44,9 @@
                     @endif
                 </div>
                 <div class="text-muted small text-truncate">
-                    <span class="text-primary fw-semibold">{{ Str::limit($job->title, 25) }}</span>
+                    @if($job)
+                        <span class="text-primary fw-semibold">{{ Str::limit($job->title, 25) }}</span>
+                    @endif
                     @if($lastMsg)
                         · {{ Str::limit($lastMsg->body, 40) }}
                     @else

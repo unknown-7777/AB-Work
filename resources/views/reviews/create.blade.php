@@ -4,73 +4,109 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-lg-6">
+
+
+        <div class="bg-white rounded-3 shadow-sm p-4 mb-4">
+            <div class="d-flex align-items-center gap-3">
+                @if($reviewee->avatar)
+                    <img src="{{ $reviewee->avatarUrl() }}"
+                         class="rounded-circle" width="56" height="56"
+                         style="object-fit:cover;">
+                @else
+                    <i class="bi bi-person-circle text-primary" style="font-size:56px;"></i>
+                @endif
+                <div>
+                    <div class="text-muted small">Reviewing</div>
+                    <h5 class="fw-bold mb-0">{{ $reviewee->name }}</h5>
+                    <small class="text-muted">For: <strong>{{ $job->title }}</strong></small>
+                </div>
+            </div>
+        </div>
+
+
         <div class="bg-white rounded-3 shadow-sm p-4">
-            <h4 class="fw-bold mb-1">Leave a Review</h4>
-            <p class="text-muted mb-4">
-                Reviewing: <strong>{{ $reviewee->name }}</strong>
-                for job: <strong>{{ $job->title }}</strong>
-            </p>
+            <h5 class="fw-bold mb-4">Your Review</h5>
 
             <form action="{{ route('reviews.store', $job) }}" method="POST">
                 @csrf
 
 
                 <div class="mb-4">
-                    <label class="form-label fw-semibold">Overall Rating *</label>
-                    <div class="d-flex gap-2">
+                    <label class="form-label fw-semibold">Overall Rating <span class="text-danger">*</span></label>
+                    <div class="d-flex gap-3 flex-wrap">
                         @for($i = 1; $i <= 5; $i++)
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio"
-                                   name="rating" value="{{ $i }}"
-                                   id="rating{{ $i }}"
+                        <div>
+                            <input type="radio" class="btn-check" name="rating"
+                                   id="rating{{ $i }}" value="{{ $i }}"
                                    {{ old('rating') == $i ? 'checked' : '' }} required>
-                            <label class="form-check-label" for="rating{{ $i }}">
+                            <label class="btn btn-outline-warning" for="rating{{ $i }}">
                                 {{ $i }} ⭐
                             </label>
                         </div>
                         @endfor
                     </div>
                     @error('rating')
-                        <div class="text-danger small">{{ $message }}</div>
+                        <div class="text-danger small mt-1">{{ $message }}</div>
                     @enderror
                 </div>
 
 
-                <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Communication</label>
-                        <select name="communication" class="form-select">
-                            <option value="">Select</option>
-                            @for($i = 1; $i <= 5; $i++)
-                                <option value="{{ $i }}" {{ old('communication') == $i ? 'selected' : '' }}>
-                                    {{ $i }} Star{{ $i > 1 ? 's' : '' }}
-                                </option>
-                            @endfor
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Quality of Work</label>
-                        <select name="quality" class="form-select">
-                            <option value="">Select</option>
-                            @for($i = 1; $i <= 5; $i++)
-                                <option value="{{ $i }}" {{ old('quality') == $i ? 'selected' : '' }}>
-                                    {{ $i }} Star{{ $i > 1 ? 's' : '' }}
-                                </option>
-                            @endfor
-                        </select>
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Detailed Ratings <span class="text-muted fw-normal">(optional)</span></label>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label small">Communication</label>
+                            <select name="communication" class="form-select form-select-sm">
+                                <option value="">-</option>
+                                @for($i = 1; $i <= 5; $i++)
+                                    <option value="{{ $i }}" {{ old('communication') == $i ? 'selected' : '' }}>
+                                        {{ $i }} ⭐
+                                    </option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small">Quality</label>
+                            <select name="quality" class="form-select form-select-sm">
+                                <option value="">-</option>
+                                @for($i = 1; $i <= 5; $i++)
+                                    <option value="{{ $i }}" {{ old('quality') == $i ? 'selected' : '' }}>
+                                        {{ $i }} ⭐
+                                    </option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small">Professionalism</label>
+                            <select name="professionalism" class="form-select form-select-sm">
+                                <option value="">-</option>
+                                @for($i = 1; $i <= 5; $i++)
+                                    <option value="{{ $i }}" {{ old('professionalism') == $i ? 'selected' : '' }}>
+                                        {{ $i }} ⭐
+                                    </option>
+                                @endfor
+                            </select>
+                        </div>
                     </div>
                 </div>
 
 
                 <div class="mb-4">
-                    <label class="form-label fw-semibold">Comment</label>
-                    <textarea name="comment" rows="4" class="form-control"
+                    <label class="form-label fw-semibold">
+                        Comment <span class="text-muted fw-normal">(optional)</span>
+                    </label>
+                    <textarea name="comment" rows="5" class="form-control"
                               placeholder="Share your experience...">{{ old('comment') }}</textarea>
                 </div>
 
-                <button type="submit" class="btn btn-primary px-5">
-                    <i class="bi bi-star me-2"></i>Submit Review
-                </button>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-warning px-5 fw-bold">
+                        <i class="bi bi-star me-2"></i>Submit Review
+                    </button>
+                    <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">
+                        Cancel
+                    </a>
+                </div>
             </form>
         </div>
     </div>

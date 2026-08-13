@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\AvatarController;
+use App\Http\Controllers\FreelancerDirectoryController;
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -104,12 +105,14 @@ Route::middleware(['auth', 'verified', 'role:freelancer'])
             Route::delete('/profile',                   [ProfileController::class, 'destroy'])->name('profile.destroy');
             Route::get('/jobs/{job}/review',            [ReviewController::class, 'create'])->name('reviews.create');
             Route::post('/jobs/{job}/review',           [ReviewController::class, 'store'])->name('reviews.store');
-            Route::get('/freelancers/{userId}',         [FreelancerProfileController::class, 'show'])->name('freelancer.profile.show')->middleware('auth');
             Route::get('/messages',                     [MessageController::class, 'index'])->name('messages.index');
-            Route::get('/messages/{job}',               [MessageController::class, 'show'])->name('messages.show');
-            Route::post('/messages/{job}',              [MessageController::class, 'store'])->name('messages.store');
+            Route::get('/messages/{user}',              [MessageController::class, 'show'])->name('messages.show');
+            Route::post('/messages/{user}',             [MessageController::class, 'store'])->name('messages.store');
             Route::post('/avatar',                      [AvatarController::class, 'update'])->name('avatar.update');
             Route::delete('/avatar',                    [AvatarController::class, 'destroy'])->name('avatar.destroy');
+            Route::get('/freelancers',                  [FreelancerDirectoryController::class, 'index'])->name('freelancers.index');
+            Route::get('/freelancers/{user}',           [FreelancerDirectoryController::class, 'show'])->name('freelancers.show');
+            // Route::get('/freelancers-profile/{userId}', [FreelancerProfileController::class, 'show'])->name('freelancer.profile.show')->middleware('auth');
         });
         
         Route::get('/lang/{locale}', function ($locale) {

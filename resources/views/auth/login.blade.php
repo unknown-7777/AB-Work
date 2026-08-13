@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/icons/bootstrap-icons.min.css') }}">   
     <style>
         body {
-            background-color: #f8fafc; /* Matches your light dashboard grey background */
+            background-color: #f8fafc; 
         }
         .form-control:focus {
             border-color: #0d6efd;
@@ -35,7 +35,7 @@
                 
 
                 @if (session('status'))
-                    <div class="alert alert-success small py-2 rounded-3 mb-4" role="alert">
+                    <div class="alert alert-danger text-danger mb-4" role="alert">
                         {{ session('status') }}
                     </div>
                 @endif
@@ -89,7 +89,7 @@
                         @enderror
                     </div>
 
-                    <!-- Remember Me Checkbox -->
+
                     <div class="form-check mb-4 mt-2">
                         <input id="remember_me" type="checkbox" name="remember" class="form-check-input rounded-1">
                         <label for="remember_me" class="form-check-label text-muted small user-select-none">
