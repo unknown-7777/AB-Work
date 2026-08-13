@@ -6,7 +6,15 @@
 
     <div class="col-lg-4">
         <div class="bg-white rounded-3 shadow-sm p-4 text-center">
-            <i class="bi bi-person-circle text-primary" style="font-size: 36px; line-height: 1;"></i>
+            
+            @if($user->avatar)
+                <img src="{{ $user->avatarUrl() }}"
+                     class="rounded-circle" width="28" height="28"
+                     style="object-fit:cover;">
+            @else
+                <i class="bi bi-person-circle text-primary" style="font-size:28px; line-height:1;"></i>
+            @endif
+            
                  class="rounded-circle mb-3" width="80" height="80">
             <h4 class="fw-bold">{{ $user->name }}</h4>
             <p class="text-muted mb-2">{{ $user->profile->title ?? 'Freelancer' }}</p>

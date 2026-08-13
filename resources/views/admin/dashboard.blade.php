@@ -113,7 +113,15 @@
             @foreach($recentUsers as $user)
             <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
                 <div class="d-flex align-items-center gap-2">
-                    <i class="bi bi-person-circle text-primary" style="font-size: 36px; line-height: 1;"></i>
+
+                    @if($user->avatar)
+                        <img src="{{ $user->avatarUrl() }}"
+                             class="rounded-circle" width="28" height="28"
+                             style="object-fit:cover;">
+                    @else
+                        <i class="bi bi-person-circle text-primary" style="font-size:28px; line-height:1;"></i>
+                    @endif
+                    
                     <div>
                         <div class="fw-semibold small">{{ $user->name }}</div>
                         <div class="text-muted" style="font-size:0.75rem;">{{ $user->email }}</div>

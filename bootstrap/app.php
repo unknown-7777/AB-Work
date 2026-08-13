@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
+            \App\Http\Middleware\IsBanned::class,
         ]);
         $middleware->alias([
             'role'              => \App\Http\Middleware\RoleMiddleware::class,

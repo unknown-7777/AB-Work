@@ -122,8 +122,18 @@
                    class="nav-link {{ request()->routeIs('client.jobs.index', 'client.jobs.show') ? 'active' : '' }}">
                     <i class="bi bi-briefcase"></i> My Jobs
                 </a>
-                <a href="#" class="nav-link">
+
+                @php
+                    $unreadMessages = \App\Models\Message::where('receiver_id', auth()->id())
+                        ->where('is_read', false)->count();
+                @endphp
+                
+                <a href="{{ route('messages.index') }}"
+                   class="nav-link {{ request()->routeIs('messages.*') ? 'active' : '' }}">
                     <i class="bi bi-chat-dots"></i> Messages
+                    @if($unreadMessages > 0)
+                        <span class="badge bg-danger ms-1">{{ $unreadMessages }}</span>
+                    @endif
                 </a>
     
                 @elseif(auth()->user()->isFreelancer())
@@ -139,9 +149,20 @@
                        class="nav-link {{ request()->routeIs('freelancer.bids.*') ? 'active' : '' }}">
                         <i class="bi bi-file-earmark-text"></i> My Bids
                     </a>
-                    <a href="#" class="nav-link">
+
+                    @php
+                        $unreadMessages = \App\Models\Message::where('receiver_id', auth()->id())
+                            ->where('is_read', false)->count();
+                    @endphp
+                    
+                    <a href="{{ route('messages.index') }}"
+                       class="nav-link {{ request()->routeIs('messages.*') ? 'active' : '' }}">
                         <i class="bi bi-chat-dots"></i> Messages
+                        @if($unreadMessages > 0)
+                            <span class="badge bg-danger ms-1">{{ $unreadMessages }}</span>
+                        @endif
                     </a>
+
                     <a href="{{ route('freelancer.profile.edit') }}"
                        class="nav-link {{ request()->routeIs('freelancer.profile.*') ? 'active' : '' }}">
                         <i class="bi bi-person-circle"></i> My Profile
@@ -167,15 +188,7 @@
             @endif
     
         </nav>
-    
-        <div style="position:absolute; bottom:0; width:100%; border-top:1px solid rgba(255,255,255,0.1);">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="nav-link w-100 text-start border-0 bg-transparent">
-                    <i class="bi bi-box-arrow-left"></i> Logout
-                </button>
-            </form>
-        </div>
+        
     </div>
 
 
@@ -210,7 +223,40 @@
             <span class="text-muted small fw-medium">{{ auth()->user()->name }}</span>
             
             
-            <i class="bi bi-person-circle text-primary" style="font-size: 36px; line-height: 1;"></i>
+            <div class="dropdown">
+                <a href="#" class="d-block link-dark text-decoration-none" id="logoutDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+
+                    @if(auth()->user()->avatar)
+                        <img src="{{ auth()->user()->avatarUrl() }}"
+                             class="rounded-circle" width="36" height="36"
+                             style="object-fit:cover;">
+                    @else
+                        <i class="bi bi-person-circle text-primary" style="font-size:36px; line-height:1;"></i>
+                    @endif
+                    
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end shadow border border-light mt-2 p-1 rounded-3" aria-labelledby="logoutDropdown" style="min-width: 160px;">
+
+                    <li>
+                        <a href="{{ route('profile.edit') }}" class="dropdown-item d-flex align-items-center gap-2 py-2 text-secondary">
+                            <i class="bi bi-pencil-square"></i> Edit Profile
+                        </a>
+                    </li>
+                    
+
+                    <li><hr class="dropdown-divider my-1"></li>
+                    
+
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}" class="m-0" onsubmit="return confirm('Are you sure you want to log out?');">
+                            @csrf
+                            <button type="submit" class="dropdown-item text-danger d-flex align-items-center gap-2 py-2 w-100">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
             
             
         </div>

@@ -11,7 +11,7 @@
                 <i class="bi bi-clock me-1"></i>{{ $job->created_at->diffForHumans() }}
             </small>
             <hr>
-            <p class="text-muted" style="white-space: pre-line;">{{ $job->description }}</p>
+            <p class="text-muted" style="white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">{{ $job->description }}</p>
 
             @if($job->required_skills)
                 <h6 class="fw-bold mt-3">Required Skills</h6>
@@ -68,7 +68,15 @@
         <div class="bg-white rounded-3 shadow-sm p-4">
             <h6 class="fw-bold mb-3">About the Client</h6>
             <div class="d-flex align-items-center gap-2">
-                <i class="bi bi-person-circle text-primary" style="font-size: 36px; line-height: 1;"></i>
+                
+                @if($user->avatar)
+                    <img src="{{ $user->avatarUrl() }}"
+                         class="rounded-circle" width="28" height="28"
+                         style="object-fit:cover;">
+                @else
+                    <i class="bi bi-person-circle text-primary" style="font-size:28px; line-height:1;"></i>
+                @endif
+                
                 <div>
                     <div class="fw-semibold">{{ $job->client->name }}</div>
                     <small class="text-muted">Member since {{ $job->client->created_at->format('M Y') }}</small>

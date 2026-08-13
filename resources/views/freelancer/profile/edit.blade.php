@@ -6,7 +6,22 @@
     <div class="col-lg-8">
         <div class="bg-white rounded-3 shadow-sm p-4">
             <div class="d-flex align-items-center gap-3 mb-4">
-                <i class="bi bi-person-circle text-primary" style="font-size: 36px; line-height: 1;"></i>
+                
+                @if(auth()->user()->avatar)
+                    <img src="{{ auth()->user()->avatarUrl() }}"
+                         class="rounded-circle border border-3 border-primary"
+                         width="100" height="100"
+                         style="object-fit:cover;" id="avatarPreview">
+                @else
+                    <div id="avatarIconWrapper" style="width:100px;height:100px;position:relative;">
+                        <i class="bi bi-person-circle text-primary" id="avatarIcon"
+                           style="font-size:100px; line-height:1; display:block;"></i>
+                        <img src="" class="rounded-circle border border-3 border-primary d-none"
+                             width="100" height="100"
+                             style="object-fit:cover;position:absolute;top:0;left:0;" id="avatarPreview">
+                    </div>
+                @endif
+                
                 <div>
                     <h4 class="fw-bold mb-0">{{ auth()->user()->name }}</h4>
                     <small class="text-muted">{{ auth()->user()->email }}</small>

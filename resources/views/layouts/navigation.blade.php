@@ -1,91 +1,70 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
+<nav class="navbar navbar-expand-sm navbar-white bg-white border-bottom py-2 shadow-sm">
+    <div class="container-fluid px-4">
+        
+        <a class="navbar-brand d-flex align-items-center me-4" href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : (auth()->user()->isClient() ? route('client.dashboard') : route('freelancer.dashboard')) }}">
+            <i class="bi bi-briefcase-fill text-primary fs-3"></i>
+            <span class="fw-bold text-dark ms-2 small">{{ config('app.name', 'ABWork') }}</span>
+        </a>
 
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ auth()->user()->isClient() ? route('client.dashboard') : route('freelancer.dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
-                </div>
+        <button class="navbar-toggler border-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarContent" aria-controls="mainNavbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list fs-3 text-secondary"></i>
+        </button>
 
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="auth()->user()->isClient() ? route('client.dashboard') : route('freelancer.dashboard')" :active="request()->routeIs('client.dashboard') || request()->routeIs('freelancer.dashboard')">
+        <div class="collapse navbar-collapse" id="mainNavbarContent">
+            
+            <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+                <li class="nav-item">
+                    <a class="nav-link fw-semibold px-2 py-2 small {{ request()->routeIs('admin.dashboard') || request()->routeIs('client.dashboard') || request()->routeIs('freelancer.dashboard') ? 'text-primary active' : 'text-secondary' }}" 
+                       href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : (auth()->user()->isClient() ? route('client.dashboard') : route('freelancer.dashboard')) }}">
                         {{ __('Dashboard') }}
-                    </x-nav-link>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="d-sm-none border-top border-light my-2 pt-2">
+                <div class="px-2 mb-3">
+                    <div class="fw-bold text-dark small">{{ Auth::user()->name }}</div>
+                    <div class="text-muted small fs-7">{{ Auth::user()->email }}</div>
                 </div>
-            </div>
-
-
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault(); this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
-
-
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="auth()->user()->isClient() ? route('client.dashboard') : route('freelancer.dashboard')" :active="request()->routeIs('client.dashboard') || request()->routeIs('freelancer.dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
-
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <form method="POST" action="{{ route('logout') }}">
+                <a class="dropdown-item py-2 px-2 text-secondary small rounded-3" href="{{ route('profile.edit') }}">
+                    <i class="bi bi-person me-2"></i> {{ __('Profile') }}
+                </a>
+                <form method="POST" action="{{ route('logout') }}" class="d-block">
                     @csrf
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
+                    <button type="submit" class="dropdown-item py-2 px-2 text-danger small rounded-3">
+                        <i class="bi bi-box-arrow-right me-2"></i> {{ __('Log Out') }}
+                    </button>
                 </form>
             </div>
+
+            <ul class="navbar-nav ms-auto d-none d-sm-flex align-items-center">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle btn btn-light border-0 px-3 py-2 rounded-3 text-secondary fw-semibold small d-flex align-items-center gap-1" 
+                       href="#" 
+                       role="button" 
+                       data-bs-toggle="dropdown" 
+                       aria-expanded="false">
+                        {{ Auth::user()->name }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end border-0 shadow rounded-3 p-2 mt-2" style="min-width: 200px;">
+                        <li>
+                            <a class="dropdown-item py-2 rounded-3 text-secondary small" href="{{ route('profile.edit') }}">
+                                <i class="bi bi-person me-2"></i> {{ __('Profile') }}
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider border-light"></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}" class="m-0">
+                                @csrf
+                                <button type="submit" class="dropdown-item py-2 rounded-3 text-danger small">
+                                    <i class="bi bi-box-arrow-right me-2"></i> {{ __('Log Out') }}
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
         </div>
     </div>
 </nav>

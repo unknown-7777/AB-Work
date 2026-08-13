@@ -1,8 +1,11 @@
 <?php
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\AvatarController;
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -21,7 +24,27 @@ use App\Http\Controllers\Freelancer\ProjectController;
 use App\Http\Controllers\Freelancer\ProfileController as FreelancerProfileController;
 
 Route::get('/', function () {
-    return view('welcome');
+
+    if (Auth::check()) {
+        $user = Auth::user();
+
+        switch ($user->role) {
+            case 'admin':
+                return redirect()->route('admin.dashboard');
+                
+            case 'client':
+                return redirect()->route('client.dashboard'); 
+                
+            case 'freelancer':
+                return redirect()->route('freelancer.dashboard'); 
+                
+            default:
+
+                return redirect()->route('dashboard'); 
+        }
+    }
+
+    return redirect()->route('login');
 });
 
 // Client routes
@@ -67,21 +90,26 @@ Route::middleware(['auth', 'verified', 'role:freelancer'])
         ->prefix('admin')
         ->name('admin.')
         ->group(function () {
-            Route::get('/dashboard',         [AdminDashboard::class, 'index'])->name('dashboard');
-            Route::get('/users',             [AdminUserController::class, 'index'])->name('users.index');
-            Route::patch('/users/{user}/toggle', [AdminUserController::class, 'toggle'])->name('users.toggle');
-            Route::delete('/users/{user}',   [AdminUserController::class, 'destroy'])->name('users.destroy');
-            Route::get('/jobs',              [AdminJobController::class, 'index'])->name('jobs.index');
-            Route::delete('/jobs/{job}',     [AdminJobController::class, 'destroy'])->name('jobs.destroy');
+            Route::get('/dashboard',                    [AdminDashboard::class, 'index'])->name('dashboard');
+            Route::get('/users',                        [AdminUserController::class, 'index'])->name('users.index');
+            Route::patch('/users/{user}/toggle',        [AdminUserController::class, 'toggle'])->name('users.toggle');
+            Route::delete('/users/{user}',              [AdminUserController::class, 'destroy'])->name('users.destroy');
+            Route::get('/jobs',                         [AdminJobController::class, 'index'])->name('jobs.index');
+            Route::delete('/jobs/{job}',                [AdminJobController::class, 'destroy'])->name('jobs.destroy');
         });
 
         Route::middleware('auth')->group(function () {
-            Route::get('/profile',    [ProfileController::class, 'edit'])->name('profile.edit');
-            Route::patch('/profile',  [ProfileController::class, 'update'])->name('profile.update');
-            Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-            Route::get('/jobs/{job}/review',  [ReviewController::class, 'create'])->name('reviews.create');
-            Route::post('/jobs/{job}/review', [ReviewController::class, 'store'])->name('reviews.store');
-            Route::get('/freelancers/{userId}', [FreelancerProfileController::class, 'show'])->name('freelancer.profile.show')->middleware('auth');
+            Route::get('/profile',                      [ProfileController::class, 'edit'])->name('profile.edit');
+            Route::patch('/profile',                    [ProfileController::class, 'update'])->name('profile.update');
+            Route::delete('/profile',                   [ProfileController::class, 'destroy'])->name('profile.destroy');
+            Route::get('/jobs/{job}/review',            [ReviewController::class, 'create'])->name('reviews.create');
+            Route::post('/jobs/{job}/review',           [ReviewController::class, 'store'])->name('reviews.store');
+            Route::get('/freelancers/{userId}',         [FreelancerProfileController::class, 'show'])->name('freelancer.profile.show')->middleware('auth');
+            Route::get('/messages',                     [MessageController::class, 'index'])->name('messages.index');
+            Route::get('/messages/{job}',               [MessageController::class, 'show'])->name('messages.show');
+            Route::post('/messages/{job}',              [MessageController::class, 'store'])->name('messages.store');
+            Route::post('/avatar',                      [AvatarController::class, 'update'])->name('avatar.update');
+            Route::delete('/avatar',                    [AvatarController::class, 'destroy'])->name('avatar.destroy');
         });
         
         Route::get('/lang/{locale}', function ($locale) {

@@ -26,7 +26,7 @@
                 </span>
             </div>
             <hr>
-            <p class="text-muted" style="white-space:pre-line;">{{ $job->description }}</p>
+            <p class="text-muted" style="white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">{{ $job->description }}</p>
             @if($job->required_skills)
                 <h6 class="fw-bold mt-3">Required Skills</h6>
                 @foreach($job->required_skills as $skill)
@@ -51,7 +51,15 @@
                     @if($bid->isAccepted()) border-success bg-success bg-opacity-10 @endif">
                     <div class="d-flex justify-content-between align-items-start">
                         <div class="d-flex gap-3">
-                            <i class="bi bi-person-circle text-primary" style="font-size: 36px; line-height: 1;"></i>
+                            
+                            @if(auth()->user()->avatar)
+                                <img src="{{ auth()->user()->avatarUrl() }}"
+                                     class="rounded-circle" width="28" height="28"
+                                     style="object-fit:cover;">
+                            @else
+                                <i class="bi bi-person-circle text-primary" style="font-size:28px; line-height:1;"></i>
+                            @endif
+                            
                             <div>
                                 <div class="fw-bold">{{ $bid->freelancer->name }}</div>
                                 <small class="text-muted">

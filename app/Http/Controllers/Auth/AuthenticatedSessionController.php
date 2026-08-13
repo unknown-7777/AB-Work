@@ -28,15 +28,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $user = auth()->user();
-        
-        if ($user->isClient()) {
-            return redirect()->route('client.dashboard');
-        } elseif ($user->isFreelancer()) {
-            return redirect()->route('freelancer.dashboard');
-        } else {
-            return redirect()->route('admin.dashboard');
-        }
+        $user = Auth::user();
+
+        return redirect('/');
     }
 
     /**

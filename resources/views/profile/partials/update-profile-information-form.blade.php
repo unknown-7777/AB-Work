@@ -1,10 +1,9 @@
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
+    <header class="mb-4">
+        <h3 class="h5 fw-bold text-dark">
             {{ __('Profile Information') }}
-        </h2>
-
-        <p class="mt-1 text-sm text-gray-600">
+        </h3>
+        <p class="text-muted small">
             {{ __("Update your account's profile information and email address.") }}
         </p>
     </header>
@@ -13,51 +12,79 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}">
         @csrf
         @method('patch')
 
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+        <div class="mb-3">
+            <label for="name" class="form-label fw-semibold small text-secondary">{{ __('Name') }}</label>
+            <input id="name" 
+                   type="text" 
+                   name="name" 
+                   value="{{ old('name', $user->name) }}" 
+                   class="form-control py-2 rounded-3 @error('name') is-invalid @enderror" 
+                   placeholder="John Doe"
+                   required 
+                   autofocus 
+                   autocomplete="name" />
+            
+            @error('name')
+                <div class="invalid-feedback small fw-medium mt-1">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+        <div class="mb-4">
+            <label for="email" class="form-label fw-semibold small text-secondary">{{ __('Email') }}</label>
+            <input id="email" 
+                   type="email" 
+                   name="email" 
+                   value="{{ old('email', $user->email) }}" 
+                   class="form-control py-2 rounded-3 @error('email') is-invalid @enderror" 
+                   placeholder="name@example.com"
+                   required 
+                   autocomplete="username" />
+            
+            @error('email')
+                <div class="invalid-feedback small fw-medium mt-1">
+                    {{ $message }}
+                </div>
+            @enderror
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-gray-800">
+                <div class="mt-3 p-3 bg-light rounded-3 border">
+                    <p class="small text-dark mb-2">
                         {{ __('Your email address is unverified.') }}
-
-                        <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
                     </p>
+                    <button form="send-verification" type="submit" class="btn btn-link p-0 small fw-semibold text-primary text-decoration-none">
+                        {{ __('Click here to re-send the verification email.') }}
+                    </button>
 
                     @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600">
+                        <div class="alert alert-success small py-2 rounded-3 mt-2 mb-0" role="alert">
                             {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
+                        </div>
                     @endif
                 </div>
             @endif
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+        <div class="d-flex align-items-center gap-3">
+            <button type="submit" class="btn btn-primary py-2 px-4 rounded-3 fw-semibold small">
+                {{ __('Save') }}
+            </button>
 
             @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
+                <span class="text-success small fw-medium d-inline-flex align-items-center gap-1 opacity-75" id="profile-status-toast">
+                    <i class="bi bi-check-circle-fill"></i> {{ __('Saved.') }}
+                </span>
+                <script>
+                    setTimeout(() => {
+                        const toast = document.getElementById('profile-status-toast');
+                        if (toast) toast.style.display = 'none';
+                    }, 2000);
+                </script>
             @endif
         </div>
     </form>

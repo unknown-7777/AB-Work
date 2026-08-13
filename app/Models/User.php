@@ -11,7 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['name', 'email', 'password', 'role', 'is_active'];
+    protected $fillable = ['name', 'email', 'password', 'role', 'is_active', 'avatar'];
 
     protected $hidden = ['password', 'remember_token'];
 
@@ -27,6 +27,11 @@ class User extends Authenticatable
     public function isClient(): bool     { return $this->role === 'client'; }
     public function isFreelancer(): bool { return $this->role === 'freelancer'; }
     public function isAdmin(): bool      { return $this->role === 'admin'; }
+
+    public function avatarUrl(): ?string
+    {
+        return $this->avatar ? asset('storage/' . $this->avatar) : null;
+    }
 
     public function profile(): HasOne
     {
