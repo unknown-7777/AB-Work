@@ -15,7 +15,7 @@ class StoreBidRequest extends FormRequest
         return [
             'amount'        => ['required', 'numeric', 'min:1'],
             'delivery_days' => ['required', 'integer', 'min:1'],
-            'cover_letter'  => ['required', 'string', 'min:50'],
+            'cover_letter'  => ['required', 'string', 'min:10'],
         ];
     }
 }

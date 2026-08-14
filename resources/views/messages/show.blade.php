@@ -22,14 +22,14 @@
                         <h5 class="fw-bold mb-0">{{ $otherUser->name }}</h5>
                         @if($activeJobs->count() > 0)
                             <small class="text-primary fw-semibold">
-                                {{ $activeJobs->count() > 1 ? __('app.active_projects') : __('app.active_project') }}: 
+                                {{ $activeJobs->count() > 1 ? __('app.active_projects') : __('app.active_projects') }}: 
                                 {{ $activeJobs->pluck('title')->implode(', ') }}
                             </small>
                         @endif
                     </div>
                 </div>
                 <div>
-                    {{-- Safely grab status from the primary active job --}}
+
                     @if($latestJob = $activeJobs->first())
                         <span class="badge bg-secondary text-capitalize">
                             {{ __('app.' . $latestJob->status) }}
@@ -70,7 +70,7 @@
                             id="chat-textarea"
                             name="body" 
                             class="form-control border-end-0 bg-light" 
-                            placeholder="{{ __('app.type_a_message') }}"
+                            placeholder="{{ __('app.type_message') }}"
                             rows="1"
                             style="resize: none; padding-top: 10px;"
                             required

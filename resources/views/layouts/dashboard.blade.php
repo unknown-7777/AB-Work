@@ -127,20 +127,20 @@
             @if(auth()->user()->isClient())
                 <a href="{{ route('client.dashboard') }}"
                    class="nav-link {{ request()->routeIs('client.dashboard') ? 'active' : '' }}">
-                    <i class="bi bi-speedometer2"></i> Dashboard
+                    <i class="bi bi-speedometer2"></i> {{__('app.dashboard') }}
                 </a>
                 <a href="{{ route('client.jobs.create') }}"
                    class="nav-link {{ request()->routeIs('client.jobs.create') ? 'active' : '' }}">
-                    <i class="bi bi-plus-circle"></i> Post a Job
+                    <i class="bi bi-plus-circle"></i> {{__('app.post_a_job') }}
                 </a>
                 <a href="{{ route('client.jobs.index') }}"
                    class="nav-link {{ request()->routeIs('client.jobs.index', 'client.jobs.show', 'client.milestones.*') ? 'active' : '' }}">
-                    <i class="bi bi-briefcase"></i> My Jobs
+                    <i class="bi bi-briefcase"></i> {{ __('app.my_jobs') }}
                 </a>
 
                 <a href="{{ route('freelancers.index') }}"
                    class="nav-link {{ request()->routeIs('freelancers.*') ? 'active' : '' }}">
-                    <i class="bi bi-people"></i> Find Freelancers
+                    <i class="bi bi-people"></i> {{ __('app.find_freelancers') }}
                 </a>
 
                 @php
@@ -150,7 +150,7 @@
 
                 <a href="{{ route('messages.index') }}"
                    class="nav-link {{ request()->routeIs('messages.*') ? 'active' : '' }}">
-                    <i class="bi bi-chat-dots"></i> Messages
+                    <i class="bi bi-chat-dots"></i> {{__('app.messages') }}
                     @if($unreadMessages > 0)
                         <span class="badge bg-danger ms-1">{{ $unreadMessages }}</span>
                     @endif
@@ -159,15 +159,15 @@
             @elseif(auth()->user()->isFreelancer())
                 <a href="{{ route('freelancer.dashboard') }}"
                    class="nav-link {{ request()->routeIs('freelancer.dashboard') ? 'active' : '' }}">
-                    <i class="bi bi-speedometer2"></i> Dashboard
+                    <i class="bi bi-speedometer2"></i> {{__('app.dashboard') }}
                 </a>
                 <a href="{{ route('freelancer.jobs.index') }}"
                    class="nav-link {{ request()->routeIs('freelancer.jobs.*') ? 'active' : '' }}">
-                    <i class="bi bi-search"></i> Find Jobs
+                    <i class="bi bi-search"></i> {{__('app.find_jobs') }}
                 </a>
                 <a href="{{ route('freelancer.bids.index') }}"
                    class="nav-link {{ request()->routeIs('freelancer.bids.*') ? 'active' : '' }}">
-                    <i class="bi bi-file-earmark-text"></i> My Bids
+                    <i class="bi bi-file-earmark-text"></i> {{__('app.my_bids') }}
                 </a>
 
                 @php
@@ -177,7 +177,7 @@
 
                 <a href="{{ route('messages.index') }}"
                    class="nav-link {{ request()->routeIs('messages.*') ? 'active' : '' }}">
-                    <i class="bi bi-chat-dots"></i> Messages
+                    <i class="bi bi-chat-dots"></i> {{ __('app.messages') }}
                     @if($unreadMessages > 0)
                         <span class="badge bg-danger ms-1">{{ $unreadMessages }}</span>
                     @endif
@@ -185,25 +185,25 @@
 
                 <a href="{{ route('freelancer.projects.index') }}"
                    class="nav-link {{ request()->routeIs('freelancer.projects.*') ? 'active' : '' }}">
-                    <i class="bi bi-kanban"></i> My Projects
+                    <i class="bi bi-kanban"></i> {{__('app.my_projects') }}
                 </a>
                 <a href="{{ route('freelancer.profile.edit') }}"
                    class="nav-link {{ request()->routeIs('freelancer.profile.*') ? 'active' : '' }}">
-                    <i class="bi bi-person-circle"></i> My Profile
+                    <i class="bi bi-person-circle"></i> {{__('app.my_profile') }}
                 </a>
 
             @elseif(auth()->user()->isAdmin())
                 <a href="{{ route('admin.dashboard') }}"
                    class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                    <i class="bi bi-speedometer2"></i> Dashboard
+                    <i class="bi bi-speedometer2"></i> {{__('app.dashboard') }}
                 </a>
                 <a href="{{ route('admin.users.index') }}"
                    class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-                    <i class="bi bi-people"></i> Users
+                    <i class="bi bi-people"></i> {{__('app.users') }}
                 </a>
                 <a href="{{ route('admin.jobs.index') }}"
                    class="nav-link {{ request()->routeIs('admin.jobs.*') ? 'active' : '' }}">
-                    <i class="bi bi-briefcase"></i> All Jobs
+                    <i class="bi bi-briefcase"></i> {{__('app.all_jobs') }}
                 </a>
             @endif
         </nav>
@@ -244,7 +244,7 @@
                 <ul class="dropdown-menu dropdown-menu-end shadow border border-light mt-2 p-1 rounded-3" aria-labelledby="logoutDropdown" style="min-width: 160px;">
                     <li>
                         <a href="{{ route('profile.edit') }}" class="dropdown-item d-flex align-items-center gap-2 py-2 text-secondary">
-                            <i class="bi bi-pencil-square"></i> Edit Profile
+                            <i class="bi bi-pencil-square"></i> {{__('app.edit_profile') }}
                         </a>
                     </li>
                     <li><hr class="dropdown-divider my-1"></li>
@@ -254,7 +254,7 @@
                         </form>
 
                         <button type="button" class="dropdown-item text-danger d-flex align-items-center gap-2 py-2 w-100" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                            <i class="bi bi-box-arrow-right"></i> Logout
+                            <i class="bi bi-box-arrow-right"></i> {{__('app.logout') }}
                         </button>
                     </li>
                 </ul>

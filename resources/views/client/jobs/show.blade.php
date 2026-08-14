@@ -215,13 +215,13 @@
                 <span>{{ __('app.' . $job->experience_level) }}</span>
             </div>
 
-            {{-- Total Bids --}}
+
             <div class="mb-2 d-flex justify-content-between">
                 <span class="text-muted">{{ __('app.total_bids') }}</span>
                 <span>{{ $job->bids_count }}</span>
             </div>
 
-            {{-- Deadline --}}
+
             @if($job->deadline)
             <div class="mb-2 d-flex justify-content-between">
                 <span class="text-muted">{{ __('app.deadline') }}</span>
@@ -230,7 +230,7 @@
             @endif
         </div>
 
-        {{-- Review Section --}}
+
         @if($job->isCompleted())
         <div class="bg-white rounded-3 shadow-sm p-4 mt-4">
             <h5 class="fw-bold mb-3"><i class="bi bi-star me-2"></i>{{ __('app.review') }}</h5>

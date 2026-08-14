@@ -245,13 +245,13 @@ return [
 
 
     'client_dashboard'      => 'Müşderi paneli',
-    'active_jobs'           => 'Aktiwişler',
+    'active_jobs'           => 'Aktiw işler',
     'total_bids'            => 'Jemi teklipler',
     'total_jobs'            => 'Jemi işler',
     'in_progress_label'     => 'Işlenilýär',
     'completed_label'       => 'Tamamlandy',
     'bids_sent'             => 'Ugratylgy teklipler',
-    'active_projects'       => 'Aktiwiş taslamalar',
+    'active_projects'       => 'Aktiw taslamalar',
     'total_earned'          => 'Jemi gazanylan',
     'pending_payment'       => 'Garaşylýan töleg',
     'avg_rating'            => 'Ortaça baha',

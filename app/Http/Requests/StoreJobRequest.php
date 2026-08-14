@@ -15,7 +15,7 @@ class StoreJobRequest extends FormRequest
     {
         return [
             'title'            => ['required', 'string', 'min:10', 'max:150'],
-            'description'      => ['required', 'string', 'min:50'],
+            'description'      => ['required', 'string', 'min:10'],
             'category_id'      => ['required', 'exists:categories,id'],
             'budget_type'      => ['required', 'in:fixed,hourly'],
             'budget_min'       => ['required', 'numeric', 'min:1'],
