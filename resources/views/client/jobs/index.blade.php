@@ -1,23 +1,19 @@
 @extends('layouts.dashboard')
-@section('title', 'My Jobs')
-
-
-
-
+@section('title', __('app.my_jobs'))
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h4 class="fw-bold mb-0">My Jobs</h4>
+    <h4 class="fw-bold mb-0">{{ __('app.my_jobs') }}</h4>
     <a href="{{ route('client.jobs.create') }}" class="btn btn-primary">
-        <i class="bi bi-plus me-1"></i>Post New Job
+        <i class="bi bi-plus me-1"></i>{{ __('app.post_new_job') }}
     </a>
 </div>
 
 @if($jobs->isEmpty())
     <div class="bg-white rounded-3 shadow-sm p-5 text-center text-muted">
         <i class="bi bi-briefcase fs-1 d-block mb-3 opacity-25"></i>
-        <p>You haven't posted any jobs yet.</p>
-        <a href="{{ route('client.jobs.create') }}" class="btn btn-outline-primary btn-sm">Post Your First Job</a>
+        <p>{{ __('app.no_jobs_posted_yet') }}</p>
+        <a href="{{ route('client.jobs.create') }}" class="btn btn-outline-primary btn-sm">{{ __('app.post_your_first_job') }}</a>
     </div>
 @else
     @foreach($jobs as $job)
@@ -30,7 +26,7 @@
                     </a>
                 </h5>
                 <small class="text-muted">
-                    <i class="bi bi-tag me-1"></i>{{ $job->category->name ?? 'N/A' }} ·
+                    <i class="bi bi-tag me-1"></i>{{ $job->category->name ?? __('app.not_available') }} ·
                     <i class="bi bi-clock me-1"></i>{{ $job->created_at->diffForHumans() }}
                 </small>
             </div>
@@ -40,10 +36,10 @@
                     @elseif($job->status == 'in_progress') bg-primary
                     @elseif($job->status == 'completed') bg-secondary
                     @else bg-danger @endif">
-                    {{ ucfirst(str_replace('_', ' ', $job->status)) }}
+                    {{ __('app.' . $job->status) }}
                 </span>
                 <div class="mt-2 text-muted small">
-                    <i class="bi bi-people me-1"></i>{{ $job->bids_count }} bids
+                    <i class="bi bi-people me-1"></i>{{ $job->bids_count }} {{ __('app.bids') }}
                 </div>
             </div>
         </div>

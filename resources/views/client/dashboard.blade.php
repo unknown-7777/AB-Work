@@ -34,7 +34,7 @@
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <div class="stat-number">{{ $stats['in_progress'] }}</div>
-                    <div class="stat-label">{{ __('app.in_progress') }}</div>
+                    <div class="stat-label">{{ __('app.in_progress_label') }}</div>
                 </div>
                 <div class="stat-icon bg-info bg-opacity-10 text-info">
                     <i class="bi bi-clock"></i>
@@ -47,7 +47,7 @@
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <div class="stat-number">{{ $stats['completed'] }}</div>
-                    <div class="stat-label">{{ __('app.completed') }}</div>
+                    <div class="stat-label">{{ __('app.completed_label') }}</div>
                 </div>
                 <div class="stat-icon bg-success bg-opacity-10 text-success">
                     <i class="bi bi-check-circle"></i>
@@ -59,7 +59,7 @@
 
 <div class="bg-white rounded-3 shadow-sm p-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="fw-bold mb-0">{{ __('app.my_recent_jobs') }}</h5>
+        <h5 class="fw-bold mb-0">{{ __('app.recent_jobs') }}</h5>
         <a href="{{ route('client.jobs.create') }}" class="btn btn-primary btn-sm">
             <i class="bi bi-plus me-1"></i>{{ __('app.post_new_job') }}
         </a>
@@ -92,17 +92,17 @@
                     @elseif($job->status == 'in_progress') bg-primary
                     @elseif($job->status == 'completed') bg-secondary
                     @else bg-danger @endif">
-                    {{ ucfirst(str_replace('_',' ',$job->status)) }}
+                    {{ __('app.' . $job->status) }}
                 </span>
                 <div class="text-muted small mt-1">
-                    <i class="bi bi-people me-1"></i>{{ $job->bids_count }} {{ trans_choice('app.bids_count', $job->bids_count) }}
+                    <i class="bi bi-people me-1"></i>{{ $job->bids_count }} {{ __('app.bids') }}
                 </div>
             </div>
         </div>
         @endforeach
         <div class="text-center mt-3">
             <a href="{{ route('client.jobs.index') }}" class="btn btn-outline-primary btn-sm">
-                {{ __('app.view_all_jobs') }}
+                {{ __('app.all_jobs') }}
             </a>
         </div>
     @endif

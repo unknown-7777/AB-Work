@@ -4,7 +4,7 @@
 @section('content')
 <div class="row g-4">
 
-
+    {{-- Left Sidebar: User Details --}}
     <div class="col-lg-4">
         <div class="bg-white rounded-3 shadow-sm p-4 text-center mb-4">
             @if($user->avatar)
@@ -17,18 +17,16 @@
             @endif
 
             <h4 class="fw-bold mb-1">{{ $user->name }}</h4>
-            <p class="text-muted mb-2">{{ $user->profile->title ?? 'Freelancer' }}</p>
+            <p class="text-muted mb-2">{{ $user->profile->title ?? __('app.freelancer') }}</p>
 
-            
             @if($user->profile?->availability)
             <span class="badge mb-3
                 @if($user->profile->availability == 'available') bg-success
                 @elseif($user->profile->availability == 'busy') bg-warning text-dark
                 @else bg-danger @endif">
-                {{ ucfirst($user->profile->availability) }}
+                {{ __('app.' . $user->profile->availability) }}
             </span>
             @endif
-
 
             @php
                 $avg   = $user->reviewsReceived->avg('rating') ?? 0;
@@ -42,13 +40,12 @@
                     @endfor
                 </span>
                 <div class="text-muted small">
-                    {{ number_format($avg, 1) }} / 5 · {{ $count }} reviews
+                    {{ number_format($avg, 1) }} / 5 · {{ $count }} {{ __('app.reviews') }}
                 </div>
             </div>
             @endif
 
             <hr>
-
 
             @if($user->profile?->location)
             <div class="text-muted small mb-2">
@@ -59,51 +56,50 @@
             @if($user->profile?->hourly_rate)
             <div class="text-muted small mb-2">
                 <i class="bi bi-clock me-1"></i>
-                ${{ number_format($user->profile->hourly_rate) }}/hr
+                ${{ number_format($user->profile->hourly_rate) }}{{ __('app.per_hour') }}
             </div>
             @endif
 
             @if($user->profile?->website)
             <div class="text-muted small mb-2">
                 <i class="bi bi-globe me-1"></i>
-                <a href="{{ $user->profile->website }}" target="_blank">Website</a>
+                <a href="{{ $user->profile->website }}" target="_blank">{{ __('app.website') }}</a>
             </div>
             @endif
 
             <div class="text-muted small mb-3">
                 <i class="bi bi-calendar me-1"></i>
-                Member since {{ $user->created_at->format('M Y') }}
+                {{ __('app.member_since') }} {{ $user->created_at->format('M Y') }}
             </div>
 
             <div class="text-muted small mb-3">
                 <i class="bi bi-check-circle me-1 text-success"></i>
-                {{ $completedJobs }} jobs completed
+                {{ $completedJobs }} {{ __('app.jobs_completed') }}
             </div>
-
 
             @if(auth()->user()->isClient())
             <a href="{{ route('client.jobs.create') }}" class="btn btn-primary w-100 mb-2">
-                <i class="bi bi-briefcase me-2"></i>Post a Job
+                <i class="bi bi-briefcase me-2"></i>{{ __('app.post_a_job') }}
             </a>
             @endif
         </div>
     </div>
 
+    {{-- Main Content: Bio, Skills, and Reviews --}}
     <div class="col-lg-8">
 
-      @if($user->profile?->bio)
+        @if($user->profile?->bio)
         <div class="bg-white rounded-3 shadow-sm p-4 mb-4">
-            <h5 class="fw-bold mb-3">About</h5>
+            <h5 class="fw-bold mb-3">{{ __('app.about') }}</h5>
             <p class="text-muted" style="white-space:pre-line; word-wrap:break-word;">
                 {{ $user->profile->bio }}
             </p>
         </div>
         @endif
 
-
         @if($user->profile?->skills)
         <div class="bg-white rounded-3 shadow-sm p-4 mb-4">
-            <h5 class="fw-bold mb-3">Skills</h5>
+            <h5 class="fw-bold mb-3">{{ __('app.skills') }}</h5>
             <div class="d-flex flex-wrap gap-2">
                 @foreach($user->profile->skills as $skill)
                     <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 fs-6">
@@ -114,10 +110,9 @@
         </div>
         @endif
 
-
         <div class="bg-white rounded-3 shadow-sm p-4">
             <h5 class="fw-bold mb-4">
-                Reviews
+                {{ __('app.reviews') }}
                 @if($count > 0)
                     <span class="text-warning ms-2 fs-6">
                         {{ number_format($avg, 1) }} ⭐
@@ -151,22 +146,21 @@
                     <p class="text-muted small mb-2">{{ $review->comment }}</p>
                 @endif
 
-
                 @if($review->communication || $review->quality || $review->professionalism)
                 <div class="d-flex gap-3 flex-wrap">
                     @if($review->communication)
                         <small class="text-muted">
-                            Communication: <strong>{{ $review->communication }}/5</strong>
+                            {{ __('app.communication') }}: <strong>{{ $review->communication }}/5</strong>
                         </small>
                     @endif
                     @if($review->quality)
                         <small class="text-muted">
-                            Quality: <strong>{{ $review->quality }}/5</strong>
+                            {{ __('app.quality') }}: <strong>{{ $review->quality }}/5</strong>
                         </small>
                     @endif
                     @if($review->professionalism)
                         <small class="text-muted">
-                            Professionalism: <strong>{{ $review->professionalism }}/5</strong>
+                            {{ __('app.professionalism') }}: <strong>{{ $review->professionalism }}/5</strong>
                         </small>
                     @endif
                 </div>
@@ -175,7 +169,7 @@
             @empty
                 <div class="text-center py-4 text-muted">
                     <i class="bi bi-star fs-1 d-block mb-2 opacity-25"></i>
-                    <p>No reviews yet.</p>
+                    <p>{{ __('app.no_reviews') }}</p>
                 </div>
             @endforelse
         </div>

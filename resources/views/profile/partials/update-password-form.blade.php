@@ -1,10 +1,10 @@
 <section>
     <header class="mb-4">
         <h3 class="h5 fw-bold text-dark">
-            {{ __('Update Password') }}
+            {{ __('app.update_password') }}
         </h3>
         <p class="text-muted small">
-            {{ __('Ensure your account is using a long, random password to stay secure.') }}
+            {{ __('app.update_password_desc') }}
         </p>
     </header>
 
@@ -13,7 +13,7 @@
         @method('put')
 
         <div class="mb-3">
-            <label for="update_password_current_password" class="form-label fw-semibold small text-secondary">{{ __('Current Password') }}</label>
+            <label for="update_password_current_password" class="form-label fw-semibold small text-secondary">{{ __('app.current_password') }}</label>
             <input id="update_password_current_password" 
                    name="current_password" 
                    type="password" 
@@ -29,7 +29,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="update_password_password" class="form-label fw-semibold small text-secondary">{{ __('New Password') }}</label>
+            <label for="update_password_password" class="form-label fw-semibold small text-secondary">{{ __('app.new_password') }}</label>
             <input id="update_password_password" 
                    name="password" 
                    type="password" 
@@ -45,7 +45,7 @@
         </div>
 
         <div class="mb-4">
-            <label for="update_password_password_confirmation" class="form-label fw-semibold small text-secondary">{{ __('Confirm Password') }}</label>
+            <label for="update_password_password_confirmation" class="form-label fw-semibold small text-secondary">{{ __('app.confirm_password') }}</label>
             <input id="update_password_password_confirmation" 
                    name="password_confirmation" 
                    type="password" 
@@ -62,12 +62,12 @@
 
         <div class="d-flex align-items-center gap-3">
             <button type="submit" class="btn btn-primary py-2 px-4 rounded-3 fw-semibold small">
-                {{ __('Save') }}
+                {{ __('app.save') }}
             </button>
 
             @if (session('status') === 'password-updated')
                 <span class="text-success small fw-medium d-inline-flex align-items-center gap-1 opacity-75" id="password-status-toast">
-                    <i class="bi bi-check-circle-fill"></i> {{ __('Saved.') }}
+                    <i class="bi bi-check-circle-fill"></i> {{ __('app.saved') }}
                 </span>
                 <script>
                     setTimeout(() => {

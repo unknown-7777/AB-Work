@@ -134,7 +134,7 @@
                     <i class="bi bi-plus-circle"></i> Post a Job
                 </a>
                 <a href="{{ route('client.jobs.index') }}"
-                   class="nav-link {{ request()->routeIs('client.jobs.index', 'client.jobs.show') ? 'active' : '' }}">
+                   class="nav-link {{ request()->routeIs('client.jobs.index', 'client.jobs.show', 'client.milestones.*') ? 'active' : '' }}">
                     <i class="bi bi-briefcase"></i> My Jobs
                 </a>
 
@@ -217,13 +217,13 @@
             <div class="dropdown">
                 <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
                     @if(app()->getLocale() == 'ru') 🇷🇺 RU
-                    @elseif(app()->getLocale() == 'tk') 🇹🇲 TK
+                    @elseif(app()->getLocale() == 'tm') 🇹🇲 TM
                     @else 🇬🇧 EN @endif
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="{{ route('lang.switch', 'en') }}">🇬🇧 English</a></li>
                     <li><a class="dropdown-item" href="{{ route('lang.switch', 'ru') }}">🇷🇺 Русский</a></li>
-                    <li><a class="dropdown-item" href="{{ route('lang.switch', 'tk') }}">🇹🇲 Türkmençe</a></li>
+                    <li><a class="dropdown-item" href="{{ route('lang.switch', 'tm') }}">🇹🇲 Türkmençe</a></li>
                 </ul>
             </div>
 

@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title', 'Chat with ' . $otherUser->name)
+@section('title', __('app.chat_with') . ' ' . $otherUser->name)
 
 @section('content')
 <div class="container-fluid p-0" style="margin-top: -1.5rem;">
@@ -20,16 +20,20 @@
                     @endif
                     <div>
                         <h5 class="fw-bold mb-0">{{ $otherUser->name }}</h5>
-                        <small class="text-primary fw-semibold">
-                            Active {{ Str::plural('Project', $activeJobs->count()) }}: 
-                            {{ $activeJobs->pluck('title')->implode(', ') }}
-                        </small>
+                        @if($activeJobs->count() > 0)
+                            <small class="text-primary fw-semibold">
+                                {{ $activeJobs->count() > 1 ? __('app.active_projects') : __('app.active_project') }}: 
+                                {{ $activeJobs->pluck('title')->implode(', ') }}
+                            </small>
+                        @endif
                     </div>
                 </div>
                 <div>
                     {{-- Safely grab status from the primary active job --}}
                     @if($latestJob = $activeJobs->first())
-                        <span class="badge bg-secondary text-capitalize">{{ str_replace('_', ' ', $latestJob->status) }}</span>
+                        <span class="badge bg-secondary text-capitalize">
+                            {{ __('app.' . $latestJob->status) }}
+                        </span>
                     @endif
                 </div>
             </div>
@@ -53,7 +57,7 @@
                 @empty
                     <div class="h-100 d-flex flex-column align-items-center justify-content-center text-muted">
                         <i class="bi bi-chat-left-text fs-1 opacity-25 mb-2"></i>
-                        <p class="mb-0">No messages yet. Start the conversation below!</p>
+                        <p class="mb-0">{{ __('app.start_conversation') }}</p>
                     </div>
                 @endforelse
             </div>
@@ -66,7 +70,7 @@
                             id="chat-textarea"
                             name="body" 
                             class="form-control border-end-0 bg-light" 
-                            placeholder="Type a message... (Press Enter to send, Shift+Enter for new line)"
+                            placeholder="{{ __('app.type_a_message') }}"
                             rows="1"
                             style="resize: none; padding-top: 10px;"
                             required

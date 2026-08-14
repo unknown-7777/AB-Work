@@ -116,7 +116,7 @@ Route::middleware(['auth', 'verified', 'role:freelancer'])
         });
         
         Route::get('/lang/{locale}', function ($locale) {
-            if (in_array($locale, ['en', 'ru', 'tk'])) {
+            if (in_array($locale, ['en', 'ru', 'tm'])) {
                 session(['locale' => $locale]);
             }
             return back();

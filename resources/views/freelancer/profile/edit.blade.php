@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title', 'My Profile')
+@section('title', __('app.my_profile'))
 
 @section('content')
 <div class="row justify-content-center">
@@ -32,27 +32,27 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Professional Title</label>
+                    <label class="form-label fw-semibold">{{ __('app.professional_title') }}</label>
                     <input type="text" name="title" class="form-control"
                            value="{{ old('title', $profile->title) }}"
-                           placeholder="e.g. Full Stack Laravel Developer">
+                           placeholder="{{ __('app.title_placeholder') }}">
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Bio</label>
+                    <label class="form-label fw-semibold">{{ __('app.bio') }}</label>
                     <textarea name="bio" rows="5" class="form-control"
-                              placeholder="Tell clients about yourself...">{{ old('bio', $profile->bio) }}</textarea>
+                              placeholder="{{ __('app.bio_placeholder') }}">{{ old('bio', $profile->bio) }}</textarea>
                 </div>
 
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold">Location</label>
+                        <label class="form-label fw-semibold">{{ __('app.location') }}</label>
                         <input type="text" name="location" class="form-control"
                                value="{{ old('location', $profile->location) }}"
-                               placeholder="e.g. Ashgabat, Turkmenistan">
+                               placeholder="{{ __('app.location_placeholder') }}">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold">Hourly Rate ($)</label>
+                        <label class="form-label fw-semibold">{{ __('app.hourly_rate') }}</label>
                         <input type="number" name="hourly_rate" class="form-control"
                                value="{{ old('hourly_rate', $profile->hourly_rate) }}"
                                placeholder="e.g. 25">
@@ -60,32 +60,31 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Skills</label>
+                    <label class="form-label fw-semibold">{{ __('app.skills') }}</label>
                     <input type="text" name="skills" class="form-control"
                            value="{{ old('skills', is_array($profile->skills) ? implode(', ', $profile->skills) : '') }}"
                            placeholder="PHP, Laravel, Vue.js, MySQL">
-                    <small class="text-muted">Separate with commas</small>
                 </div>
 
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold">Website</label>
+                        <label class="form-label fw-semibold">{{ __('app.website') }}</label>
                         <input type="url" name="website" class="form-control"
                                value="{{ old('website', $profile->website) }}"
                                placeholder="https://yourwebsite.com">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold">Availability</label>
+                        <label class="form-label fw-semibold">{{ __('app.availability') }}</label>
                         <select name="availability" class="form-select">
-                            <option value="available"   {{ old('availability', $profile->availability) == 'available'   ? 'selected' : '' }}>Available</option>
-                            <option value="busy"        {{ old('availability', $profile->availability) == 'busy'        ? 'selected' : '' }}>Busy</option>
-                            <option value="unavailable" {{ old('availability', $profile->availability) == 'unavailable' ? 'selected' : '' }}>Unavailable</option>
+                            <option value="available"   {{ old('availability', $profile->availability) == 'available'   ? 'selected' : '' }}>{{ __('app.available') }}</option>
+                            <option value="busy"        {{ old('availability', $profile->availability) == 'busy'        ? 'selected' : '' }}>{{ __('app.busy') }}</option>
+                            <option value="unavailable" {{ old('availability', $profile->availability) == 'unavailable' ? 'selected' : '' }}>{{ __('app.unavailable') }}</option>
                         </select>
                     </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary px-5">
-                    <i class="bi bi-save me-2"></i>Save Profile
+                    <i class="bi bi-save me-2"></i>{{ __('app.save_profile') }}
                 </button>
             </form>
         </div>

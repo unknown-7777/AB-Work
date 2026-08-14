@@ -1,20 +1,21 @@
 @extends('layouts.dashboard')
 @section('title', $job->title)
 
-
 @section('content')
 @php use App\Models\Review; @endphp
 
 <div class="row g-4">
 
+    {{-- Main Content Column --}}
     <div class="col-lg-8">
 
+        {{-- Job Description Card --}}
         <div class="bg-white rounded-3 shadow-sm p-4 mb-4">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <h4 class="fw-bold">{{ $job->title }}</h4>
                     <small class="text-muted">
-                        <i class="bi bi-tag me-1"></i>{{ $job->category->name ?? 'N/A' }} ·
+                        <i class="bi bi-tag me-1"></i>{{ $job->category->name ?? __('app.not_available') }} ·
                         <i class="bi bi-clock me-1"></i>{{ $job->created_at->diffForHumans() }}
                     </small>
                 </div>
@@ -23,28 +24,28 @@
                     @elseif($job->status == 'in_progress') bg-primary
                     @elseif($job->status == 'completed') bg-secondary
                     @else bg-danger @endif fs-6">
-                    {{ ucfirst(str_replace('_', ' ', $job->status)) }}
+                    {{ __('app.' . $job->status) }}
                 </span>
             </div>
             <hr>
             <p class="text-muted" style="white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">{{ $job->description }}</p>
             @if($job->required_skills)
-                <h6 class="fw-bold mt-3">Required Skills</h6>
+                <h6 class="fw-bold mt-3">{{ __('app.required_skills') }}</h6>
                 @foreach($job->required_skills as $skill)
                     <span class="badge bg-primary bg-opacity-10 text-primary me-1">{{ $skill }}</span>
                 @endforeach
             @endif
         </div>
 
-
+        {{-- Bids Section --}}
         <div class="bg-white rounded-3 shadow-sm p-4 mb-4">
             <h5 class="fw-bold mb-4">
-                <i class="bi bi-people me-2"></i>Bids ({{ $job->bids_count }})
+                <i class="bi bi-people me-2"></i>{{ __('app.bids') }} ({{ $job->bids_count }})
             </h5>
             @if($job->bids->isEmpty())
                 <div class="text-center py-4 text-muted">
                     <i class="bi bi-inbox fs-1 d-block mb-2 opacity-25"></i>
-                    <p>No bids yet.</p>
+                    <p>{{ __('app.no_bids_yet') }}</p>
                 </div>
             @else
                 @foreach($job->bids as $bid)
@@ -52,7 +53,6 @@
                     @if($bid->isAccepted()) border-success bg-success bg-opacity-10 @endif">
                     <div class="d-flex justify-content-between align-items-start">
                         <div class="d-flex gap-3">
-                            
                             @if(auth()->user()->avatar)
                                 <img src="{{ auth()->user()->avatarUrl() }}"
                                      class="rounded-circle" width="28" height="28"
@@ -64,11 +64,11 @@
                             <div>
                                 <div class="fw-bold">{{ $bid->freelancer->name }}</div>
                                 <small class="text-muted">
-                                    {{ $bid->freelancer->profile->title ?? 'Freelancer' }}
+                                    {{ $bid->freelancer->profile->title ?? __('app.freelancer') }}
                                 </small>
                                 <div class="mt-1">
                                     <span class="fw-bold text-success">${{ number_format($bid->amount) }}</span>
-                                    <span class="text-muted small ms-2">· {{ $bid->delivery_days }} days delivery</span>
+                                    <span class="text-muted small ms-2">· {{ $bid->delivery_days }} {{ __('app.days_delivery') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                             @elseif($bid->status == 'accepted') bg-success
                             @elseif($bid->status == 'rejected') bg-danger
                             @else bg-secondary @endif">
-                            {{ ucfirst($bid->status) }}
+                            {{ __('app.' . $bid->status) }}
                         </span>
                     </div>
 
@@ -88,13 +88,13 @@
                         <form action="{{ route('client.bids.accept', $bid) }}" method="POST">
                             @csrf @method('PATCH')
                             <button class="btn btn-success btn-sm">
-                                <i class="bi bi-check-lg me-1"></i>Accept
+                                <i class="bi bi-check-lg me-1"></i>{{ __('app.accept') }}
                             </button>
                         </form>
                         <form action="{{ route('client.bids.reject', $bid) }}" method="POST">
                             @csrf @method('PATCH')
                             <button class="btn btn-outline-danger btn-sm">
-                                <i class="bi bi-x-lg me-1"></i>Reject
+                                <i class="bi bi-x-lg me-1"></i>{{ __('app.reject') }}
                             </button>
                         </form>
                     </div>
@@ -102,7 +102,7 @@
 
                     @if($bid->isAccepted())
                         <span class="badge bg-success mt-2">
-                            <i class="bi bi-check-circle me-1"></i>Hired
+                            <i class="bi bi-check-circle me-1"></i>{{ __('app.hired') }}
                         </span>
                     @endif
                 </div>
@@ -110,10 +110,10 @@
             @endif
         </div>
 
-
+        {{-- Milestones Section --}}
         @if($job->isInProgress() && $job->milestones->isNotEmpty())
         <div class="bg-white rounded-3 shadow-sm p-4 mb-4">
-            <h5 class="fw-bold mb-4"><i class="bi bi-kanban me-2"></i>Milestones</h5>
+            <h5 class="fw-bold mb-4"><i class="bi bi-kanban me-2"></i>{{ __('app.milestones') }}</h5>
             @foreach($job->milestones as $milestone)
             <div class="border rounded-3 p-3 mb-3">
                 <div class="d-flex justify-content-between align-items-start">
@@ -122,13 +122,13 @@
                         <span class="text-success fw-semibold">${{ number_format($milestone->amount) }}</span>
                     </div>
                     <span class="badge {{ $milestone->statusBadgeClass() }}">
-                        {{ ucfirst(str_replace('_',' ',$milestone->status)) }}
+                        {{ __('app.' . $milestone->status) }}
                     </span>
                 </div>
 
                 @if($milestone->submission_note)
                     <div class="alert alert-info mt-2 mb-2 small">
-                        <strong>Freelancer note:</strong> {{ $milestone->submission_note }}
+                        <strong>{{ __('app.freelancer_note') }}:</strong> {{ $milestone->submission_note }}
                     </div>
                 @endif
 
@@ -137,12 +137,12 @@
                     <form action="{{ route('client.milestones.approve', $milestone) }}" method="POST">
                         @csrf @method('PATCH')
                         <button class="btn btn-success btn-sm">
-                            <i class="bi bi-check-lg me-1"></i>Approve & Release Payment
+                            <i class="bi bi-check-lg me-1"></i>{{ __('app.approve_and_release_payment') }}
                         </button>
                     </form>
                     <button class="btn btn-outline-warning btn-sm" data-bs-toggle="modal"
                             data-bs-target="#revisionModal{{ $milestone->id }}">
-                        Request Revision
+                        {{ __('app.request_revision') }}
                     </button>
                 </div>
 
@@ -150,17 +150,17 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Request Revision</h5>
+                                <h5 class="modal-title">{{ __('app.request_revision') }}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <form action="{{ route('client.milestones.revision', $milestone) }}" method="POST">
                                 @csrf @method('PATCH')
                                 <div class="modal-body">
                                     <textarea name="revision_note" class="form-control" rows="4"
-                                              placeholder="Explain what needs to be changed..." required></textarea>
+                                              placeholder="{{ __('app.revision_note_placeholder') }}" required></textarea>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-warning">Send Revision Request</button>
+                                    <button type="submit" class="btn btn-warning">{{ __('app.send_revision_request') }}</button>
                                 </div>
                             </form>
                         </div>
@@ -170,7 +170,7 @@
 
                 @if($milestone->isApproved())
                     <div class="alert alert-success mt-3 mb-0 small">
-                        <i class="bi bi-check-circle me-1"></i>Approved & Payment released
+                        <i class="bi bi-check-circle me-1"></i>{{ __('app.approved_and_payment_released') }}
                     </div>
                 @endif
             </div>
@@ -180,57 +180,68 @@
         @elseif($job->isInProgress() && $job->milestones->isEmpty())
         <div class="bg-white rounded-3 shadow-sm p-4 mb-4 text-center text-muted">
             <i class="bi bi-kanban fs-1 d-block mb-2 opacity-25"></i>
-            <p>No milestones yet.</p>
+            <p>{{ __('app.no_milestones_yet') }}</p>
             <a href="{{ route('client.milestones.create', $job) }}" class="btn btn-primary btn-sm">
-                <i class="bi bi-plus me-1"></i>Create Milestones
+                <i class="bi bi-plus me-1"></i>{{ __('app.create_milestones') }}
             </a>
         </div>
         @endif
 
     </div>
 
-
+    {{-- Sidebar Column --}}
     <div class="col-lg-4">
         <div class="bg-white rounded-3 shadow-sm p-4">
-            <h6 class="fw-bold mb-3">Job Details</h6>
+            <h6 class="fw-bold mb-3">{{ __('app.job_details') }}</h6>
+            
+            {{-- Budget --}}
             <div class="mb-2 d-flex justify-content-between">
-                <span class="text-muted">Budget</span>
+                <span class="text-muted">{{ __('app.budget') }}</span>
                 <span class="fw-semibold text-success">
                     ${{ number_format($job->budget_min) }}
                     @if($job->budget_max)– ${{ number_format($job->budget_max) }}@endif
                 </span>
             </div>
+
+            {{-- Budget Type --}}
             <div class="mb-2 d-flex justify-content-between">
-                <span class="text-muted">Type</span>
-                <span>{{ ucfirst($job->budget_type) }}</span>
+                <span class="text-muted">{{ __('app.budget_type') }}</span>
+                <span>{{ __('app.' . $job->budget_type) }}</span>
             </div>
+
+            {{-- Experience Level --}}
             <div class="mb-2 d-flex justify-content-between">
-                <span class="text-muted">Level</span>
-                <span>{{ ucfirst($job->experience_level) }}</span>
+                <span class="text-muted">{{ __('app.experience_level') }}</span>
+                <span>{{ __('app.' . $job->experience_level) }}</span>
             </div>
+
+            {{-- Total Bids --}}
             <div class="mb-2 d-flex justify-content-between">
-                <span class="text-muted">Total Bids</span>
+                <span class="text-muted">{{ __('app.total_bids') }}</span>
                 <span>{{ $job->bids_count }}</span>
             </div>
+
+            {{-- Deadline --}}
             @if($job->deadline)
             <div class="mb-2 d-flex justify-content-between">
-                <span class="text-muted">Deadline</span>
+                <span class="text-muted">{{ __('app.deadline') }}</span>
                 <span>{{ $job->deadline->format('M d, Y') }}</span>
             </div>
             @endif
         </div>
 
+        {{-- Review Section --}}
         @if($job->isCompleted())
         <div class="bg-white rounded-3 shadow-sm p-4 mt-4">
-            <h5 class="fw-bold mb-3"><i class="bi bi-star me-2"></i>Review</h5>
+            <h5 class="fw-bold mb-3"><i class="bi bi-star me-2"></i>{{ __('app.review') }}</h5>
             @if(Review::where('job_id',$job->id)->where('reviewer_id',auth()->id())->exists())
                 <div class="alert alert-success mb-0 small">
-                    <i class="bi bi-check-circle me-1"></i>You already reviewed this project.
+                    <i class="bi bi-check-circle me-1"></i>{{ __('app.already_reviewed_project') }}
                 </div>
             @else
-                <p class="text-muted small">How was your experience with the freelancer?</p>
+                <p class="text-muted small">{{ __('app.review_experience_question') }}</p>
                 <a href="{{ route('reviews.create', $job) }}" class="btn btn-warning w-100">
-                    <i class="bi bi-star me-2"></i>Leave a Review
+                    <i class="bi bi-star me-2"></i>{{ __('app.leave_a_review') }}
                 </a>
             @endif
         </div>

@@ -21,6 +21,15 @@ class Bid extends Model
         ];
     }
 
+    public function getStatusLabelAttribute(): string
+    {
+        $key = 'app.status_' . $this->status;
+        
+        return \Illuminate\Support\Facades\Lang::has($key) 
+            ? __($key) 
+            : ucfirst($this->status);
+    }
+
     public function job(): BelongsTo
     {
         return $this->belongsTo(Job::class);
